@@ -3,3 +3,4 @@
 # Recipe:: tools
 
 package 'git'
+package 'ntp'
