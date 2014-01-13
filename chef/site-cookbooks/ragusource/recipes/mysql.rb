@@ -14,13 +14,13 @@ end
 
 execute 'mysql-set-root-password' do
     action :nothing
-    command "mysqladmin -u root password root"
+    command "mysqladmin -u root password #{node['mysql']['root_pass']}"
     notifies :run, "execute[mysql-enable-remote-login]"
 end
 
 execute 'mysql-enable-remote-login' do
     action :nothing
-    command "mysql --user=root --password=root -e \"GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;\""
+    command "mysql --user=root --password=#{node['mysql']['root_pass']} -e \"GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '#{node['mysql']['root_pass']}' WITH GRANT OPTION;\""
     notifies :restart, "service[mysql]"
 end
 
@@ -28,7 +28,7 @@ template "mysql-config" do
     path "/etc/mysql/my.cnf"
     source "mysql.erb"
     variables(
-        "bind_ip" => '0.0.0.0'
+        "bind_ip" => node['mysql']['bind_ip']
     )
     notifies :restart, "service[mysql]"
     mode 0644
