@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName <%= @server_name %>
+    DocumentRoot <%= @document_root %>
+    RewriteEngine On
+    DirectoryIndex index.html index.php
+    ErrorLog <%= @log_root %>/<%= @server_name %>-error.log
+    CustomLog <%= @log_root %>/<%= @server_name %>-access.log combined
+    LogLevel error rewrite:error
+    <Directory <%= @document_root %>>
+        AllowOverride all
+        Require all granted
+    </Directory>
+</VirtualHost>
