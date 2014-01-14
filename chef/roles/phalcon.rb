@@ -1,3 +1,3 @@
 run_list(
-    "recipe[ragusource::phalcon]"
+    'recipe[ragusource::phalcon]'
 )
