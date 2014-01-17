@@ -10,6 +10,7 @@ end
 
 execute "sudo a2enmod rewrite" do
     notifies :restart, "service[apache2]"
+    not_if "test -e /etc/apache2/mods-enabled/rewrite.load"
 end
 
 unless node['apache']['vhosts'].nil?

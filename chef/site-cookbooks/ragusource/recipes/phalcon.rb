@@ -10,7 +10,7 @@ execute "clone-phalcon" do
     action :run
     command "git clone --depth=1 git://github.com/phalcon/cphalcon.git"
     cwd "/home/vagrant"
-    not_if { File.exist?('/home/vagrant/cphalcon') }
+    not_if "test -d /home/vagrant/cphalcon"
     notifies :run, "execute[build-phalcon]"
 end
 
