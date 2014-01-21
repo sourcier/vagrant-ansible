@@ -4,3 +4,4 @@
 
 package 'git'
 package 'ntp'
+package 'sendmail'
