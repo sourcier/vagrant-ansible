@@ -73,6 +73,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           #        "ignore_repeated_errors" => "On"
           #    }
           #},
+          #"phalcon" => {
+          #    "version" => "1.2.5"
+          #},
           #"mysql" => {
           #    "bind_ip" => "0.0.0.0"
           #},

@@ -11,15 +11,22 @@ execute "clone-phalcon" do
     command "git clone --depth=1 git://github.com/phalcon/cphalcon.git"
     cwd "/home/vagrant"
     not_if "test -d /home/vagrant/cphalcon"
+    notifies :run, "execute[checkout-phalcon-tag]"
+end
+
+execute "checkout-phalcon-tag" do
+    command "git checkout tags/v#{node['phalcon']['version']}"
+    cwd "/home/vagrant/cphalcon"
     notifies :run, "execute[build-phalcon]"
 end
 
 execute "build-phalcon" do
-    command "sudo ./install"
     action :nothing
+    command "sudo ./install"
     cwd "/home/vagrant/cphalcon/build"
     notifies :create, "template[phalcon-apache]"
     notifies :create, "template[phalcon-cli]"
+    not_if "php --ri phalcon | grep #{node['phalcon']['version']}"
 end
 
 template "phalcon-apache" do
