@@ -65,14 +65,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           #        "post_max_size" => "12M",
           #
           #        "xdebug.remote_enable" => "On",
-          #        "xdebug.remote_autostart" => "On",
-          #        "xdebug.remote_connect_back" => "On",
+          #        "xdebug.remote_host" => "10.0.0.1",
           #
           #        "error_reporting" => "32767", # E_ALL
           #        "display_errors" => "On",
           #        "html_errors" => "On",
           #        "ignore_repeated_errors" => "On"
           #    }
+          #},
+          #"phalcon" => {
+          #    "version" => "1.2.5"
           #},
           #"mysql" => {
           #    "bind_ip" => "0.0.0.0"

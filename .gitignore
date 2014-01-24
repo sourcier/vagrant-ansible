@@ -3,3 +3,4 @@
 /Vagrantfile
 /logs
 /workspace
+/.vagrant/*
