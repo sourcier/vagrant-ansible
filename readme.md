@@ -6,7 +6,7 @@ Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 
 Website: http://ragusource.com
 
-Current release: 0.0.2
+Current release: 0.0.3
 
 ```bash
 $ git clone git@bitbucket.org:ragusource/vagrant2.git
