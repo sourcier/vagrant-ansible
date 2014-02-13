@@ -4,3 +4,4 @@
 /logs
 /workspace
 /.vagrant/*
+/atlassian-ide-plugin.xml

@@ -33,7 +33,7 @@ template "phalcon-apache" do
     action :nothing
     source "phalcon.erb"
     path "/etc/php5/apache2/conf.d/20-phalcon.ini"
-    notifies :restart, "service[apache2]"
+    notifies :restart, "service[apache2]", :immediately
     mode 0644
 end
 

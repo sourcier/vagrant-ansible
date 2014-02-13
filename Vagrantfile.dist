@@ -5,88 +5,90 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise64"
+    # Every Vagrant virtual environment requires a box to build off of.
+    config.vm.box = "precise64"
 
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
+    # Provider-specific configuration so you can fine-tune various
+    # backing providers for Vagrant. These expose provider-specific options.
 
-  # VMware Fusion
-  config.vm.provider "vmware_fusion" do |v, override|
-      v.vmx['memsize'] = 1024
-      v.vmx['numvcpus'] = 2
+    # VMware Fusion
+    config.vm.provider "vmware_fusion" do |v, override|
+        v.vmx['memsize'] = 1024
+        v.vmx['numvcpus'] = 2
 
-      # The url from where the 'config.vm.box' box will be fetched if it
-      # doesn't already exist on the user's system.
-      override.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
-  end
+        # The url from where the 'config.vm.box' box will be fetched if it
+        # doesn't already exist on the user's system.
+        override.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
+    end
 
-  # VirtualBox
-  config.vm.provider :virtualbox do |vb, override|
-      vb.customize [
-          "modifyvm", :id,
-          "--memory", 1024,
-          "--cpus", 2,
-          "--vram", 16
-      ]
+    # VirtualBox
+    config.vm.provider :virtualbox do |vb, override|
+        vb.customize [
+            "modifyvm", :id,
+            "--memory", 1024,
+            "--cpus", 2,
+            "--vram", 16
+        ]
 
-      # The url from where the 'config.vm.box' box will be fetched if it
-      # doesn't already exist on the user's system.
-      override.vm.box_url = "http://files.vagrantup.com/precise64.box"
-  end
+        # The url from where the 'config.vm.box' box will be fetched if it
+        # doesn't already exist on the user's system.
+        override.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    end
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  config.vm.network :private_network, ip: '10.0.0.2'
+    # Create a private network, which allows host-only access to the machine
+    # using a specific IP.
+    config.vm.network :private_network, ip: '10.0.0.2'
 
-  # Enable provisionng with Chef
-  config.vm.provision "chef_solo" do |chef|
+    # Enable provisionng with Chef
+    config.vm.provision "chef_solo" do |chef|
 
-      chef.data_bags_path = "chef/data_bags"
+        chef.data_bags_path = "chef/data_bags"
 
-      chef.roles_path = "chef/roles"
+        chef.roles_path = "chef/roles"
 
-      chef.cookbooks_path = ["chef/site-cookbooks", "chef/cookbooks"]
+        chef.cookbooks_path = ["chef/site-cookbooks", "chef/cookbooks"]
 
-      chef.add_role "default"
-      #chef.add_role "php"
-      #chef.add_role "apache"
-      #chef.add_role "phalcon"
-      #chef.add_role "mysql"
+        chef.add_role "default"
+        #chef.add_role "php"
+        #chef.add_role "apache"
+        #chef.add_role "phalcon"
+        #chef.add_role "mysql"
 
-      chef.json = {
-          #"php" => {
-          #    "options" => {
-          #        "date.timezone" => "Europe/London",
-          #
-          #        "memory_limit" => "256M",
-          #
-          #        "upload_max_filesize" => "10M",
-          #        "post_max_size" => "12M",
-          #
-          #        "xdebug.remote_enable" => "On",
-          #        "xdebug.remote_host" => "10.0.0.1",
-          #
-          #        "error_reporting" => "32767", # E_ALL
-          #        "display_errors" => "On",
-          #        "html_errors" => "On",
-          #        "ignore_repeated_errors" => "On"
-          #    }
-          #},
-          #"phalcon" => {
-          #    "version" => "1.2.5"
-          #},
-          #"mysql" => {
-          #    "bind_ip" => "0.0.0.0"
-          #},
-          #"apache" => {
-          #    "vhosts" => [
-          #        {
-          #            "server_name" => 'example.dev',
-          #            "document_root" => '/vagrant/workspace/public'
-          #        }
-          #    ]
-          #}
-      }
-  end
+        chef.json = {
+            "php" => {
+                "options" => {
+                    "date.timezone" => "Europe/London",
+
+                    "memory_limit" => "256M",
+
+                    "upload_max_filesize" => "10M",
+                    "post_max_size" => "12M",
+
+                    "xdebug.remote_enable" => "On",
+                    "xdebug.remote_host" => "10.0.0.1",
+
+                    "error_reporting" => "32767", # E_ALL
+                    "display_errors" => "On",
+                    "html_errors" => "On",
+                    "ignore_repeated_errors" => "On"
+                }
+            },
+            "phalcon" => {
+                "version" => "1.2.5"
+            },
+            "mysql" => {
+                "bind_ip" => "0.0.0.0"
+            },
+            "apache" => {
+                "nfs" => true,
+                "vhosts" => [
+                    {
+                        "server_name" => 'example.dev',
+                        "document_root" => '/var/www/example.dev/workspace/public',
+                        "nfs_mount" => '10.0.0.1:/Volumes/Development/RAGUSOURCE/example-web/workspace'
+                    }
+                ]
+            }
+        }
+    end
 end
