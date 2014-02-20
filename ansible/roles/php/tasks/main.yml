@@ -17,5 +17,5 @@
 - name: install php-xdebug
   apt: pkg=php5-xdebug state=latest
 
-- name: Update apache2 cli config
+- name: Update php cli config
   template: src=php.ini.j2 dest=/etc/php5/cli/php.ini mode=0644

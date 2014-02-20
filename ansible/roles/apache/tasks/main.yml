@@ -1,0 +1,30 @@
+---
+
+- name: install php
+  apt: pkg=apache2 state=latest
+  notify:
+    - restart apache2
+
+- name: enable modules
+  command: a2enmod {{ item.module }} creates={{ item.creates }}
+  with_items:
+    - { module: rewrite, creates: /etc/apache2/mods-enabled/rewrite.load }
+    - { module: vhost_alias, creates: /etc/apache2/mods-enabled/vhost_alias.load }
+  notify:
+    - restart apache2
+
+- name: Update php cli config
+  template: src=../../php/templates/php.ini.j2 dest=/etc/php5/cli/php.ini mode=0644
+  notify:
+      - restart apache2
+
+- name: mount nfs share
+  mount: name=/var/www/{{ item.server_name }} src={{ item.nfs_mount }} fstype=nfs state=mounted
+  when: apache.nfs
+  with_items: apache.vhosts
+
+- name: create vhost entry
+  template: src=vhost.conf.j2 dest=/etc/apache2/sites-enabled/{{ item.server_name }}.conf mode=0644
+  with_items: apache.vhosts
+  notify:
+      - restart apache2
