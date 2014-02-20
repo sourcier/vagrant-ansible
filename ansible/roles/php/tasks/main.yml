@@ -1,18 +1,16 @@
 ---
 
-- name: install php
-  apt: pkg=php5 state=latest
+- name: install php and modules
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5
+    - php5-mysql
+    - php5-xdebug
 
-- name: install php-mysql
-  apt: pkg=php5-mysql state=latest
-
-- name: install php-xdebug
-  apt: pkg=php5-xdebug state=latest
-
-- name: Update php cli config
-  template: src=php.ini.j2 dest=/etc/php5/cli/php.ini mode=0644
-
-- name: Update php apache config
-  template: src=php.ini.j2 dest=/etc/php5/apache2/php.ini mode=0644
+- name: update php configs
+  template: src=php.ini.j2 dest={{ item }} mode=0644
+  with_items:
+    - /etc/php5/cli/php.ini
+    - /etc/php5/apache2/php.ini
   notify:
     - restart apache
