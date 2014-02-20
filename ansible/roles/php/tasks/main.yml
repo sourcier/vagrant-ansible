@@ -1,0 +1,21 @@
+---
+
+- name: install add-apt-repository command
+  apt: pkg=python-software-properties state=latest
+
+- name: add ppa:ondrej/php5
+  command: add-apt-repository -y ppa:ondrej/php5 creates=/etc/apt/sources.list.d/ondrej-php5-precise.list
+  notify:
+    - update apt
+
+- name: install php
+  apt: pkg=php5 state=latest
+
+- name: install php-mysql
+  apt: pkg=php5-mysql state=latest
+
+- name: install php-xdebug
+  apt: pkg=php5-xdebug state=latest
+
+- name: Update apache2 cli config
+  template: src=php.ini.j2 dest=/etc/php5/cli/php.ini mode=0644
