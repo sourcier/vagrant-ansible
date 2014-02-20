@@ -15,9 +15,11 @@
   mount: name=/var/www/{{ item.server_name }} src={{ item.nfs_mount }} fstype=nfs state=mounted
   when: apache.nfs
   with_items: apache.vhosts
+  when: apache.vhosts
 
 - name: create vhost entry
   template: src=vhost.conf.j2 dest=/etc/apache2/sites-enabled/{{ item.server_name }}.conf mode=0644
   with_items: apache.vhosts
+  when: apache.vhosts
   notify:
       - restart apache
