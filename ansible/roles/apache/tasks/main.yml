@@ -1,9 +1,7 @@
 ---
 
-- name: install php
+- name: install apache
   apt: pkg=apache2 state=latest
-  notify:
-    - restart apache
 
 - name: enable modules
   command: a2enmod {{ item.module }} creates={{ item.creates }}
