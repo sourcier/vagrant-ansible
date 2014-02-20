@@ -1,1 +1,0 @@
-default['timezone'] = "Europe/London"
