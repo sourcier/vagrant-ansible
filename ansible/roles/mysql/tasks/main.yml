@@ -4,14 +4,10 @@
   apt: pkg=mysql-server state=latest
 
 - name: set mysql root password
-  command: mysqladmin -u root password {{ mysql.root_password }} creates=/home/vagrant/.flag_mysql_root_password
-  notify:
-      - set mysql root password flag
+  shell: mysqladmin -u root password {{ mysql.root_password }} >> /home/vagrant/.flag_mysql_root_password creates=/home/vagrant/.flag_mysql_root_password
 
 - name: enable remote mysql login
-  command: mysql --user=root --password={{ mysql.root_password }} -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '{{ mysql.root_password }}' WITH GRANT OPTION;" creates=/home/vagrant/.flag_mysql_remote_login
-  notify:
-        - set mysql remote login flag
+  shell: mysql --user=root --password={{ mysql.root_password }} -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '{{ mysql.root_password }}' WITH GRANT OPTION;" >> /home/vagrant/.flag_mysql_remote_login creates=/home/vagrant/.flag_mysql_remote_login
 
 - name: update mysql config
   template: src=my.cnf.j2 dest=/etc/mysql/my.cnf mode=0644
