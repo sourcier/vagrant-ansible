@@ -1,0 +1,8 @@
+---
+- name: vagrant ansible playbook
+  hosts: vagrant
+  user: vagrant
+  sudo: true
+  gather_facts: false
+  roles:
+    - common
