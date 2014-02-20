@@ -1,1 +1,0 @@
-default['phalcon']['version'] = nil

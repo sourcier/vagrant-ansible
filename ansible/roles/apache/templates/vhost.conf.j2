@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName {{ item.server_name }}
+    DocumentRoot {{ item.document_root }}
+    RewriteEngine On
+    DirectoryIndex index.html index.php
+    ErrorLog /var/www/{{ item.server_name }}/logs/{{ item.server_name }}-error.log
+    CustomLog /var/www/{{ item.server_name }}/logs/{{ item.server_name }}-access.log combined
+    LogLevel error rewrite:error
+    <Directory {{ item.document_root }}>
+        AllowOverride all
+        Require all granted
+    </Directory>
+</VirtualHost>

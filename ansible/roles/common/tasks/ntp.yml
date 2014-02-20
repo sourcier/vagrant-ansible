@@ -1,0 +1,9 @@
+---
+
+- name: Install ntp
+  apt: pkg=ntp state=latest
+
+- name: Update timezone
+  shell: echo {{ timezone }} > /etc/timezone creates=/home/vagrant/.flag_timezone
+  notify:
+    - set timezone flag

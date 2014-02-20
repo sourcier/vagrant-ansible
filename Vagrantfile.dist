@@ -37,57 +37,42 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
-    config.vm.network :private_network, ip: '10.0.0.2'
+    config.vm.network :private_network, ip: '10.0.0.3'
 
-    # Enable provisionng with Chef
-    config.vm.provision "chef_solo" do |chef|
+    config.vm.provision "ansible" do |ansible|
+        ansible.inventory_path = "ansible/inventory.ini"
+        ansible.playbook = "ansible/vagrant.yml"
+        ansible.host_key_checking = false
+        ansible.extra_vars = {
+            'timezone' => 'Europe/London',
+            'php' => {
+                'options' => {
+                    'date.timezone' => 'Europe/London',
 
-        chef.data_bags_path = "chef/data_bags"
+                    'memory_limit' => '256M',
 
-        chef.roles_path = "chef/roles"
+                    'upload_max_filesize' => '10M',
+                    'post_max_size' => '12M',
 
-        chef.cookbooks_path = ["chef/site-cookbooks", "chef/cookbooks"]
+                    'xdebug.remote_enable' => 'On',
+                    'xdebug.remote_host' => '10.0.0.1',
 
-        chef.add_role "default"
-        #chef.add_role "php"
-        #chef.add_role "apache"
-        #chef.add_role "phalcon"
-        #chef.add_role "mysql"
-
-        chef.json = {
-            "php" => {
-                "options" => {
-                    "date.timezone" => "Europe/London",
-
-                    "memory_limit" => "256M",
-
-                    "upload_max_filesize" => "10M",
-                    "post_max_size" => "12M",
-
-                    "xdebug.remote_enable" => "On",
-                    "xdebug.remote_host" => "10.0.0.1",
-
-                    "error_reporting" => "32767", # E_ALL
-                    "display_errors" => "On",
-                    "html_errors" => "On",
-                    "ignore_repeated_errors" => "On"
+                    'error_reporting' => '32767', # E_ALL
+                    'display_errors' => 'On',
+                    'html_errors' => 'On',
+                    'ignore_repeated_errors' => 'On'
                 }
             },
-            "phalcon" => {
-                "version" => "1.2.5"
+            'phalcon' => {
+                'version' => '1.2.5'
             },
-            "mysql" => {
-                "bind_ip" => "0.0.0.0"
+            'mysql' => {
+                'bind_ip' => '0.0.0.0',
+                'root_password' => 'root'
             },
-            "apache" => {
-                "nfs" => true,
-                "vhosts" => [
-                    {
-                        "server_name" => 'example.dev',
-                        "document_root" => '/var/www/example.dev/workspace/public',
-                        "nfs_mount" => '10.0.0.1:/Volumes/Development/RAGUSOURCE/example-web/workspace'
-                    }
-                ]
+            'apache' => {
+                'nfs' => false,
+                'vhosts' => false
             }
         }
     end
