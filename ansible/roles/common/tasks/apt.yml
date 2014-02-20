@@ -1,4 +1,4 @@
 ---
 
-- name: update apt if cache is older then 1 day
+- name: update apt cache if cache is older then 1 day
   apt: update_cache=yes cache_valid_time=86400
