@@ -1,0 +1,31 @@
+---
+
+- name: install phalcon build tools
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5-dev
+    - php5-mysql
+    - gcc
+
+- name: checkout phalcon
+  command: git clone --depth=1 git://github.com/phalcon/cphalcon.git chdir=/home/vagrant creates=/home/vagrant/cphalcon
+
+- name: checkout phalcon tag
+  command: git checkout tags/v{{ phalcon.version }} chdir=/home/vagrant/cphalcon
+
+- name: check of phalcon is installed
+  command: php --ri phalcon
+  ignore_errors: true
+  register: phalcon_check
+
+- name: install phalcon
+  command: ./install chdir=/home/vagrant/cphalcon/build
+  when: phalcon.version not in phalcon_check.stdout
+
+- name: phalcon apache config
+  copy: src=phalcon.ini dest=/etc/php5/apache2/conf.d/20-phalcon.ini mode=0644
+  notify:
+    - restart apache
+
+- name: phalcon cli config
+  copy: src=phalcon.ini dest=/etc/php5/cli/conf.d/20-phalcon.ini mode=0644
