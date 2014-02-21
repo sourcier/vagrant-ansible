@@ -1,17 +1,21 @@
 ---
 
 - name: install phalcon build tools
-  apt: pkg={{ item }} state=latest
+  apt: pkg={{ item }}
+       state=latest
   with_items:
     - php5-dev
     - php5-mysql
     - gcc
 
 - name: checkout phalcon
-  command: git clone --depth=1 git://github.com/phalcon/cphalcon.git chdir=/home/vagrant creates=/home/vagrant/cphalcon
+  command: git clone --depth=1 git://github.com/phalcon/cphalcon.git
+           chdir=/home/vagrant
+           creates=/home/vagrant/cphalcon
 
 - name: checkout phalcon tag
-  command: git checkout tags/v{{ phalcon.version }} chdir=/home/vagrant/cphalcon
+  command: git checkout tags/v{{ phalcon.version }}
+           chdir=/home/vagrant/cphalcon
 
 - name: check of phalcon is installed
   command: php --ri phalcon
@@ -19,11 +23,14 @@
   register: phalcon_check
 
 - name: install phalcon
-  command: ./install chdir=/home/vagrant/cphalcon/build
+  command: ./install
+           chdir=/home/vagrant/cphalcon/build
   when: phalcon.version not in phalcon_check.stdout
 
 - name: add phalcon configs
-  copy: src=phalcon.ini dest={{ item }} mode=0644
+  copy: src=phalcon.ini
+        dest={{ item }}
+        mode=0644
   with_items:
     - /etc/php5/apache2/conf.d/20-phalcon.ini
     - /etc/php5/cli/conf.d/20-phalcon.ini
