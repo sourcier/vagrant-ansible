@@ -1,10 +1,5 @@
 ---
 
 - name: restart mysql
-  service: name=mysql state=restarted
-
-- name: set mysql root password flag
-  command: touch /home/vagrant/.flag_mysql_root_password
-
-- name: set mysql remote login flag
-  command: touch /home/vagrant/.flag_mysql_remote_login
+  service: name=mysql
+           state=restarted

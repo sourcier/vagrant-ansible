@@ -1,14 +1,10 @@
 ---
 
 - name: restart ntp
-  service: name=ntp state=restarted
+  service: name=ntp
+           state=restarted
 
 - name: update timezone
   command: dpkg-reconfigure -f noninteractive tzdata
   notify:
     - restart ntp
-
-- name: set timezone flag
-  command: touch /home/vagrant/.flag_timezone
-  notify:
-    - update timezone

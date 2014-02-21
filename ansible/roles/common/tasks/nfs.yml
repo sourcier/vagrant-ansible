@@ -1,4 +1,5 @@
 ---
 
 - name: Install nfs-common
-  apt: pkg=nfs-common state=latest
+  apt: pkg=nfs-common
+       state=latest

@@ -1,4 +1,5 @@
 ---
 
 - name: Install git
-  apt: pkg=git state=latest
+  apt: pkg=git
+       state=latest
