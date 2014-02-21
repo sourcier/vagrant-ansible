@@ -2,7 +2,7 @@
 Created: 10 Jan 2014
 Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 Website: http://ragusource.com
-Version: 0.1.1
+Version: 0.1.2
 
 ## Dependencies
 1. [Vagrant](http://vagrantup.com/)
