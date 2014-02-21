@@ -6,7 +6,7 @@ Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 
 Website: http://ragusource.com
 
-Current release: 0.1.0
+Current release: 0.1.1
 
 ## Check out the project
 
