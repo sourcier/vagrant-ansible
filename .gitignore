@@ -1,7 +1,6 @@
 /*.iml
 /.idea/*
 /Vagrantfile
-/logs
-/workspace
+/logs/*
 /.vagrant/*
 /atlassian-ide-plugin.xml

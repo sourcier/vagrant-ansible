@@ -57,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             },
             'apache' => {
                 'nfs' => false,
-                'log_root' => '/var/www',
+                'log_root' => '/vagrant/logs',
                 'vhosts' => false
             }
         }
