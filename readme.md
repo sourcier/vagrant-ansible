@@ -28,9 +28,11 @@ Open the Vagrantfile and edit the ansible.extra_vars hash so that the apache nod
 'apache' => {
     'nfs' => true,
     'vhosts' => [
-        "server_name" => 'example.dev',
-        "document_root" => '/var/www/example.dev/public',
-        "nfs_mount" => '10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web'
+        {
+            "server_name" => 'example.dev',
+            "document_root" => '/var/www/example.dev/public',
+            "nfs_mount" => '10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web'
+        }
     ]
 }
 ```
