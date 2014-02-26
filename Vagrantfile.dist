@@ -42,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     'xdebug.remote_enable' => 'On',
                     'xdebug.remote_host' => '10.0.0.1',
 
-                    'error_reporting' => '32767', # E_ALL
+                    'error_reporting' => 'E_ALL',
                     'display_errors' => 'On',
                     'html_errors' => 'On',
                     'ignore_repeated_errors' => 'On'
@@ -57,6 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             },
             'apache' => {
                 'nfs' => false,
+                'log_root' => '/var/www',
                 'vhosts' => false
             }
         }
