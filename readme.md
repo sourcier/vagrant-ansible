@@ -2,12 +2,18 @@
 Created: 10 Jan 2014
 Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 Website: http://ragusource.com
-Version: 0.1.4
+Version: 0.2.0
 
 ## Dependencies
 
 1. [Vagrant](http://vagrantup.com/)
 2. [Ansible](http://ansible.com/)
+
+Ansible can be installed via homebrew:
+
+```bash
+$ brew install ansible
+```
 
 ## Check out the project
 
