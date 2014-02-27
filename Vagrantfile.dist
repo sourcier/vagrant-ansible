@@ -29,6 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ansible.playbook = "ansible/vagrant.yml"
         ansible.host_key_checking = false
         ansible.extra_vars = {
+            'ansible_user' => 'vagrant',
             'timezone' => 'Europe/London',
             'php' => {
                 'options' => {

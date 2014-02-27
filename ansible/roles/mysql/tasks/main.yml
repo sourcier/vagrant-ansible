@@ -5,8 +5,8 @@
        state=latest
 
 - name: set mysql root password
-  shell: mysqladmin -u root password {{ mysql.root_password }} >> /home/vagrant/.flag_mysql_root_password
-         creates=/home/vagrant/.flag_mysql_root_password
+  shell: mysqladmin -u root password {{ mysql.root_password }} >> /home/{{ ansible_user }}/.flag_mysql_root_password
+         creates=/home/{{ ansible_user }}/.flag_mysql_root_password
 
 - name: enable remote mysql login
   mysql_user: name=root
