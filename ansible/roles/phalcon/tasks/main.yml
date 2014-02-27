@@ -10,12 +10,12 @@
 
 - name: checkout phalcon
   command: git clone --depth=1 git://github.com/phalcon/cphalcon.git
-           chdir=/home/vagrant
-           creates=/home/vagrant/cphalcon
+           chdir=/home/{{ ansible_user }}
+           creates=/home/{{ ansible_user }}/cphalcon
 
 - name: checkout phalcon tag
   command: git checkout tags/v{{ phalcon.version }}
-           chdir=/home/vagrant/cphalcon
+           chdir=/home/{{ ansible_user }}/cphalcon
 
 - name: check of phalcon is installed
   command: php --ri phalcon
@@ -24,7 +24,7 @@
 
 - name: install phalcon
   command: ./install
-           chdir=/home/vagrant/cphalcon/build
+           chdir=/home/{{ ansible_user }}/cphalcon/build
   when: phalcon.version not in phalcon_check.stdout
 
 - name: add phalcon configs
