@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ragusource-vagrant" basedir=".">
     <target name="clean">
-        <delete file="Vagrantfile"/>
+        <delete file="${basedir}/Vagrantfile"/>
+        <delete file="${basedir}/ansible/inventory.ini"/>
     </target>
     <target name="prepare">
-        <copy file="Vagrantfile.dist" tofile="Vagrantfile"/>
+        <copy file="${basedir}/Vagrantfile.dist" tofile="${basedir}/Vagrantfile"/>
+        <copy file="${basedir}/ansible/inventory.ini.dist" tofile="${basedir}/ansible/inventory.ini"/>
     </target>
+    <target name="init" depends="prepare" />
 </project>

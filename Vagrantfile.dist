@@ -6,8 +6,6 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.box = 'precise64'
-    config.vm.network :private_network, ip: '10.0.0.3'
-    config.vm.hostname = 'hobo'
 
     config.vm.provider 'vmware_fusion' do |v, override|
         v.vmx['memsize'] = 1024
@@ -25,9 +23,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         override.vm.box_url = 'http://files.vagrantup.com/precise64.box'
     end
 
+    config.vm.define "hobo", primary: true do |hobo|
+        hobo.vm.network :private_network, ip: '10.0.0.3'
+        hobo.vm.hostname = 'hobo'
+    end
+
     config.vm.provision 'ansible' do |ansible|
         ansible.inventory_path = 'ansible/inventory.ini'
-        ansible.playbook = 'ansible/vagrant.yml'
+        ansible.playbook = 'ansible/site.yml'
         ansible.host_key_checking = false
         ansible.extra_vars = {
             'ansible_user' => 'vagrant',
