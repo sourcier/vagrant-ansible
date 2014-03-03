@@ -4,3 +4,4 @@
 /logs/*
 /.vagrant/*
 /atlassian-ide-plugin.xml
+/ansible/inventory.ini

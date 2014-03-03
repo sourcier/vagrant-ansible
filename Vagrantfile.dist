@@ -1,32 +1,36 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-VAGRANTFILE_API_VERSION = "2"
+VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-    config.vm.box = "precise64"
-    config.vm.network :private_network, ip: '10.0.0.3'
+    config.vm.box = 'precise64'
 
-    config.vm.provider "vmware_fusion" do |v, override|
+    config.vm.provider 'vmware_fusion' do |v, override|
         v.vmx['memsize'] = 1024
         v.vmx['numvcpus'] = 2
-        override.vm.box_url = "http://files.vagrantup.com/precise64_vmware.box"
+        override.vm.box_url = 'http://files.vagrantup.com/precise64_vmware.box'
     end
 
     config.vm.provider :virtualbox do |vb, override|
         vb.customize [
-            "modifyvm", :id,
-            "--memory", 1024,
-            "--cpus", 2,
-            "--vram", 16
+            'modifyvm', :id,
+            '--memory', 1024,
+            '--cpus', 2,
+            '--vram', 16
         ]
-        override.vm.box_url = "http://files.vagrantup.com/precise64.box"
+        override.vm.box_url = 'http://files.vagrantup.com/precise64.box'
     end
 
-    config.vm.provision "ansible" do |ansible|
-        ansible.inventory_path = "ansible/inventory.ini"
-        ansible.playbook = "ansible/vagrant.yml"
+    config.vm.define "hobo", primary: true do |hobo|
+        hobo.vm.network :private_network, ip: '10.0.0.3'
+        hobo.vm.hostname = 'hobo'
+    end
+
+    config.vm.provision 'ansible' do |ansible|
+        ansible.inventory_path = 'ansible/inventory.ini'
+        ansible.playbook = 'ansible/site.yml'
         ansible.host_key_checking = false
         ansible.extra_vars = {
             'ansible_user' => 'vagrant',

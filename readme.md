@@ -2,7 +2,7 @@
 Created: 10 Jan 2014
 Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 Website: http://ragusource.com
-Version: 0.2.0
+Version: 0.2.1
 
 ## Dependencies
 
@@ -20,13 +20,13 @@ $ brew install ansible
 ```bash
 $ git clone git@bitbucket.org:ragusource/vagrant.git
 $ cd vagrant
-$ ant prepare
-$ vagrant up
+$ ant init
 ```
 
-Edit Vagrantfile if you need make any changes.
+Edit Vagrantfile if you need make any changes. If you modify the IP address for hobo you will also need to update the
+inventory file located here: anisble/inventory.ini.
 
-## Add a virtual host
+## Add virtual hosts
 
 Open the Vagrantfile and edit the ansible.extra_vars hash so that the apache node looks like this:
 
@@ -44,3 +44,11 @@ Open the Vagrantfile and edit the ansible.extra_vars hash so that the apache nod
 ```
 
 The apache.vhost node is a collection and multiple vhosts can be added.
+
+## Provision
+
+You can start and provision the machine by running the following:
+
+```bash
+$ vagrant up --provision
+```
