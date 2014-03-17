@@ -5,8 +5,12 @@
        state=latest
 
 - name: set mysql root password
-  shell: mysqladmin -u root password {{ mysql.root_password }} >> /home/{{ ansible_user }}/.flag_mysql_root_password
-         creates=/home/{{ ansible_user }}/.flag_mysql_root_password
+  command: mysqladmin password {{ mysql.root_password }}
+
+- name: update mysql config
+  template: src=my.cnf.j2
+            dest=/etc/mysql/my.cnf
+            mode=0644
 
 - name: enable remote mysql login
   mysql_user: name=root
@@ -16,10 +20,5 @@
               state=present
               login_user=root
               login_password={{ mysql.root_password }}
-
-- name: update mysql config
-  template: src=my.cnf.j2
-            dest=/etc/mysql/my.cnf
-            mode=0644
   notify:
     - restart mysql
