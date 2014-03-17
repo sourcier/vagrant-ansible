@@ -2,7 +2,7 @@
 Created: 10 Jan 2014
 Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 Website: http://ragusource.com
-Version: 0.2.1
+Version: 0.2.2
 
 ## Dependencies
 
@@ -28,19 +28,19 @@ inventory file located here: anisble/inventory.ini.
 
 ## Add virtual hosts
 
-Open the Vagrantfile and edit the ansible.extra_vars hash so that the apache node looks like this:
+Open the ansible extra vars file for the host ```ansible/vars/<host>.yml```, add extra virtual hosts by adding the
+following:
 
-```python
-'apache' => {
-    'nfs' => true,
-    'vhosts' => [
-        {
-            "server_name" => 'example.dev',
-            "document_root" => '/var/www/example.dev/public',
-            "nfs_mount" => '10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web'
-        }
-    ]
-}
+
+```yml
+---
+apache:
+nfs: true
+log_root: "/vagrant/logs"
+vhosts:
+  - server_name: "example.dev"
+    document_root: "/var/www/example.dev/public"
+    nfs_mount: "10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web"
 ```
 
 The apache.vhost node is a collection and multiple vhosts can be added.
@@ -51,4 +51,28 @@ You can start and provision the machine by running the following:
 
 ```bash
 $ vagrant up --provision
+```
+
+## Using the Digital Ocean provider
+
+Uncomment the ```digitalocean_provider``` provider and ```tramp``` config nodes. Insert your Digital Ocean client Id
+API key into the provider section:
+
+```ruby
+provider.client_id = 'xxxx'
+provider.api_key = 'xxxx'
+```
+
+Up the vagrant box using:
+
+```bash
+$ vagrant up tramp --provider=digital_ocean
+```
+
+### Installing the Digital Ocean provider
+
+If you do not have the Digital Ocean provider installed, issue the following command:
+
+```bash
+$ vagrant plugin install vagrant-digitalocean
 ```

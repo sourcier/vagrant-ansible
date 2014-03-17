@@ -23,8 +23,15 @@
 
 - name: create vhost entry
   template: src=vhost.conf.j2
-            dest=/etc/apache2/sites-enabled/{{ item.server_name }}.conf
+            dest=/etc/apache2/sites-available/{{ item.server_name }}.conf
             mode=0644
+  with_items: apache.vhosts
+  when: apache.vhosts
+
+- name: link vhost entry
+  file: src=/etc/apache2/sites-available/{{ item.server_name }}.conf
+    dest=/etc/apache2/sites-enabled/{{ item.server_name }}.conf
+    state=link
   with_items: apache.vhosts
   when: apache.vhosts
   notify:

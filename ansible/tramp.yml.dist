@@ -1,0 +1,7 @@
+---
+- name: vagrant ansible playbook
+  hosts: digital_ocean
+  user: root
+  gather_facts: false
+  roles:
+    - common
