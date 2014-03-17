@@ -7,6 +7,10 @@
     <target name="prepare">
         <copy file="${basedir}/Vagrantfile.dist" tofile="${basedir}/Vagrantfile"/>
         <copy file="${basedir}/ansible/inventory.ini.dist" tofile="${basedir}/ansible/inventory.ini"/>
+        <copy file="${basedir}/ansible/hobo.yml.dist" tofile="${basedir}/ansible/hobo.yml"/>
+        <copy file="${basedir}/ansible/vars/hobo.yml.dist" tofile="${basedir}/ansible/vars/hobo.yml"/>
+        <copy file="${basedir}/ansible/tramp.yml.dist" tofile="${basedir}/ansible/tramp.yml"/>
+        <copy file="${basedir}/ansible/vars/tramp.yml.dist" tofile="${basedir}/ansible/vars/tramp.yml"/>
     </target>
     <target name="init" depends="prepare" />
 </project>
