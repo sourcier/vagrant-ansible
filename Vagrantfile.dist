@@ -7,14 +7,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.box = 'precise64'
 
-    config.vm.provider 'vmware_fusion' do |v, override|
-        v.vmx['memsize'] = 1024
-        v.vmx['numvcpus'] = 2
+    config.vm.provider :vmware_fusion do |vmware_fusion, override|
+        vmware_fusion.vmx['memsize'] = 1024
+        vmware_fusion.vmx['numvcpus'] = 2
         override.vm.box_url = 'http://files.vagrantup.com/precise64_vmware.box'
     end
 
-    config.vm.provider :virtualbox do |vb, override|
-        vb.customize [
+    config.vm.provider :virtualbox do |virtualbox, override|
+        virtualbox.customize [
             'modifyvm', :id,
             '--memory', 1024,
             '--cpus', 2,
@@ -22,6 +22,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ]
         override.vm.box_url = 'http://files.vagrantup.com/precise64.box'
     end
+
+    #config.vm.provider :digital_ocean do |digital_ocean, override|
+    #    digital_ocean.vmx['memsize'] = 512
+    #    digital_ocean.client_id = 'xxxx'
+    #    digital_ocean.api_key = 'xxxx'
+    #    digital_ocean.image = 'Ubuntu 12.04.3 x64'
+    #    digital_ocean.region = 'Amsterdam 2'
+    #    override.ssh.private_key_path = '~/.ssh/id_rsa'
+    #    override.vm.box = 'digital_ocean'
+    #    override.vm.box_url = 'https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box'
+    #end
 
     config.vm.define :hobo, primary: true do |hobo|
         hobo.vm.network :private_network, ip: '10.0.0.3'
@@ -34,26 +45,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
     end
 
-    # config.vm.provider :digital_ocean do |provider, override|
-    #     override.ssh.private_key_path = '~/.ssh/id_rsa'
-    #
-    #     override.vm.box = 'digital_ocean'
-    #     override.vm.box_url = 'https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box'
-    #
-    #     provider.vmx['memsize'] = 512
-    #     provider.client_id = 'xxxx'
-    #     provider.api_key = 'xxxx'
-    #     provider.image = 'Ubuntu 12.04.3 x64'
-    #     provider.region = 'Amsterdam 2'
-    # end
-
-    # config.vm.define :tramp, primary: false do |tramp|
-    #     tramp.vm.hostname = 'tramp'
-    #     tramp.vm.provision 'ansible' do |ansible|
-    #         ansible.inventory_path = 'ansible/inventory.ini'
-    #         ansible.playbook = 'ansible/tramp.yml'
-    #         ansible.host_key_checking = false
-    #         ansible.extra_vars = '@ansible/vars/tramp.yml'
-    #     end
-    # end
+    #config.vm.define :tramp, primary: false do |tramp|
+    #    vagabond.vm.hostname = 'tramp'
+    #    vagabond.vm.provision 'ansible' do |ansible|
+    #        ansible.inventory_path = 'ansible/inventory.ini'
+    #        ansible.playbook = 'ansible/tramp.yml'
+    #        ansible.host_key_checking = false
+    #        ansible.extra_vars = '@ansible/vars/tramp.yml'
+    #    end
+    #end
 end

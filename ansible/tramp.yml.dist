@@ -1,12 +1,7 @@
 ---
 - name: vagrant ansible playbook
-  hosts: vagrant
-  user: vagrant
-  sudo: true
+  hosts: digital_ocean
+  user: root
   gather_facts: false
   roles:
     - common
-    - php
-    - apache
-    - phalcon
-    - mysql

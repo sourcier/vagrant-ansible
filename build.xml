@@ -3,6 +3,10 @@
     <target name="clean">
         <delete file="${basedir}/Vagrantfile"/>
         <delete file="${basedir}/ansible/inventory.ini"/>
+        <delete file="${basedir}/ansible/hobo.yml"/>
+        <delete file="${basedir}/ansible/vars/hobo.yml"/>
+        <delete file="${basedir}/ansible/tramp.yml"/>
+        <delete file="${basedir}/ansible/vars/tramp.yml"/>
     </target>
     <target name="prepare">
         <copy file="${basedir}/Vagrantfile.dist" tofile="${basedir}/Vagrantfile"/>
