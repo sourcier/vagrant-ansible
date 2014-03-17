@@ -48,12 +48,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # end
 
     # config.vm.define :tramp, primary: false do |tramp|
-    #     vagabond.vm.hostname = 'tramp'
-    #     vagabond.vm.provision 'ansible' do |ansible|
-    #
-    #     ansible.inventory_path = 'ansible/inventory.ini'
-    #     ansible.playbook = 'ansible/tramp.yml'
-    #     ansible.host_key_checking = false
-    #     ansible.extra_vars = '@ansible/vars/tramp.yml'
+    #     tramp.vm.hostname = 'tramp'
+    #     tramp.vm.provision 'ansible' do |ansible|
+    #         ansible.inventory_path = 'ansible/inventory.ini'
+    #         ansible.playbook = 'ansible/tramp.yml'
+    #         ansible.host_key_checking = false
+    #         ansible.extra_vars = '@ansible/vars/tramp.yml'
+    #     end
     # end
 end

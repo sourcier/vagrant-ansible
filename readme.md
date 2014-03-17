@@ -57,8 +57,8 @@ $ vagrant up --provision
 
 ## Using the Digital Ocean provider
 
-Uncomment the ```digitalocean_provider``` provider and ```tramp``` config nodes. Insert your Digital Ocean API keys
-into the provider section:
+Uncomment the ```digitalocean_provider``` provider and ```tramp``` config nodes. Insert your Digital Ocean client Id
+API key into the provider section:
 
 ```ruby
 provider.client_id = 'xxxx'
