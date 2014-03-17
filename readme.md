@@ -2,7 +2,7 @@
 Created: 10 Jan 2014
 Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 Website: http://ragusource.com
-Version: 0.2.1
+Version: 0.2.2
 
 ## Dependencies
 
@@ -34,15 +34,13 @@ following:
 
 ```yml
 ---
-  apache:
-    nfs: true
-    log_root: "/vagrant/logs"
-    vhosts:
-      -
-        server_name: "example.dev"
-        document_root: "/var/www/example.dev/public"
-        nfs_mount: "10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web"
-
+apache:
+nfs: true
+log_root: "/vagrant/logs"
+vhosts:
+  - server_name: "example.dev"
+    document_root: "/var/www/example.dev/public"
+    nfs_mount: "10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web"
 ```
 
 The apache.vhost node is a collection and multiple vhosts can be added.
