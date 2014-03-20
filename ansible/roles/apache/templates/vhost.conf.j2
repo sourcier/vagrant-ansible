@@ -19,6 +19,13 @@
         {% endfor %}
     {% endif %}
 
+    # Set additional file types
+    {% if item.types is defined %}
+        {% for type in item.types %}
+                AddType {{ type.handler }} {{ type.extensions|join(' ') }}
+        {% endfor%}
+    {% endif %}
+
     ErrorLog {{apache.log_root}}/{{ item.server_name }}-error.log
     CustomLog {{apache.log_root}}/{{ item.server_name }}-access.log combined
     LogLevel error rewrite:error
