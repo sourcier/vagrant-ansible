@@ -43,7 +43,23 @@ vhosts:
     nfs_mount: "10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web"
 ```
 
-The apache.vhost node is a collection and multiple vhosts can be added.
+The apache.vhost node is a collection and multiple vhosts can be added. The following optional params can be added to each vhost:
+
+```yml
+server_aliases: 'example1.dev example2.dev'
+```
+
+```yml
+env_variables:
+    - name: EXAMPLE,
+      value: example_value
+```
+
+```yml
+headers:
+    - name: EXAMPLE,
+      value: example_value
+```
 
 ## Provision
 

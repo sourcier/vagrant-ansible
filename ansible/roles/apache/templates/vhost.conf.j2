@@ -1,8 +1,24 @@
 <VirtualHost *:80>
     ServerName {{ item.server_name }}
+    {% if item.server_aliases is defined %} {{ item.server_aliases|join(' ')}} {% endif %}
     DocumentRoot {{ item.document_root }}
     RewriteEngine On
-    DirectoryIndex index.html index.php
+    DirectoryIndex {{ item.directory_index | default('index.html index.php') }}
+
+    # Set environment variables
+    {% if item.env_variables is defined %}
+        {% for env_variable in item.env_variables %}
+            SetEnv {{ env_variable.name }} {{ env_variable.value }}
+        {% endfor %}
+    {% endif %}
+
+    # Set custom headers
+    {% if item.headers is defined %}
+        {% for header in item.headers %}
+            Header set {{ header.name }} {{ header.value }}
+        {% endfor %}
+    {% endif %}
+
     ErrorLog {{apache.log_root}}/{{ item.server_name }}-error.log
     CustomLog {{apache.log_root}}/{{ item.server_name }}-access.log combined
     LogLevel error rewrite:error
