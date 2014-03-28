@@ -16,7 +16,8 @@
            creates=/home/{{ ansible_user }}/cphalcon
 
 - name: check of phalcon is installed
-  shell: php --ri phalcon 2>&1
+  command: php --ri phalcon
+  ignore_errors: true
   register: phalcon_check
 
 - name: checkout phalcon tag
