@@ -2,7 +2,7 @@
 Created: 10 Jan 2014
 Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 Website: http://ragusource.com
-Version: 0.2.2
+Version: 0.2.3
 
 ## Dependencies
 
@@ -43,7 +43,30 @@ vhosts:
     nfs_mount: "10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web"
 ```
 
-The apache.vhost node is a collection and multiple vhosts can be added.
+The apache.vhost node is a collection and multiple vhosts can be added. The following optional params can be added to each vhost:
+
+```yml
+server_aliases: 'example1.dev example2.dev'
+```
+
+```yml
+env_variables:
+    - name: ENVIRONMENT
+      value: dev
+```
+
+```yml
+headers:
+    - name: Access-Control-Allow-Origin
+      value: '*'
+```
+
+```yml
+types:
+    - extensions:
+            - .phar
+      handler: application/x-httpd-php
+```
 
 ## Provision
 

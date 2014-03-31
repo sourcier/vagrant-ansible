@@ -10,6 +10,7 @@
   with_items:
     - { module: rewrite, creates: /etc/apache2/mods-enabled/rewrite.load }
     - { module: vhost_alias, creates: /etc/apache2/mods-enabled/vhost_alias.load }
+    - { module: headers, creates: /etc/apache2/mods-enabled/headers.load }
   notify:
     - restart apache
 
