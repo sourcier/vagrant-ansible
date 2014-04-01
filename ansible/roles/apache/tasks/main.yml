@@ -7,8 +7,10 @@
     - apache2-mpm-prefork
 
 - name: set apache log folder permissions
-  shell: chmod 0755 /var/log/apache2 && find /var/log/apache2 -type f -exec chmod 0644 {} \; && touch /home/{{ ansible_user }}/.flag_set_apache_log_folder_permissions
-         creates=/home/{{ ansible_user }}/.flag_set_apache_log_folder_permissions
+  shell: chmod 0755 /var/log/apache2 &&
+         find /var/log/apache2 -type f -exec chmod 0644 {} \; &&
+         touch ~{{ ansible_user }}/.flag_set_apache_log_folder_permissions
+         creates=~{{ ansible_user }}/.flag_set_apache_log_folder_permissions
 
 - name: enable modules
   command: a2enmod {{ item.module }} creates={{ item.creates }}

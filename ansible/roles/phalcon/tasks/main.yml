@@ -9,8 +9,8 @@
 
 - name: checkout phalcon
   command: git clone --depth=1 git://github.com/phalcon/cphalcon.git
-           chdir=/home/{{ ansible_user }}
-           creates=/home/{{ ansible_user }}/cphalcon
+           chdir=~{{ ansible_user }}
+           creates=~{{ ansible_user }}/cphalcon
 
 - name: check of phalcon is installed
   command: php --ri phalcon
@@ -19,11 +19,11 @@
 
 - name: checkout phalcon tag
   shell: git fetch --all -t && git checkout -B {{ phalcon.version }} remotes/origin/{{ phalcon.version }}
-         chdir=/home/{{ ansible_user }}/cphalcon
+         chdir=~{{ ansible_user }}/cphalcon
   when: phalcon.version not in phalcon_check.stdout
 
 - name: install phalcon
-  command: ./install chdir=/home/{{ ansible_user }}/cphalcon/build
+  command: ./install chdir=~{{ ansible_user }}/cphalcon/build
   when: phalcon.version not in phalcon_check.stdout
 
 - name: add phalcon configs
