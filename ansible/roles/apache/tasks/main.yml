@@ -3,8 +3,8 @@
 - name: install apache
   apt: pkg={{ item }} state=latest
   with_items:
-      - apache2
-      - apache2-mpm-prefork
+    - apache2
+    - apache2-mpm-prefork
 
 - name: set apache log folder permissions
   shell: chmod 0755 /var/log/apache2 && find /var/log/apache2 -type f -exec chmod 0644 {} \; && touch /home/{{ ansible_user }}/.flag_set_apache_log_folder_permissions
@@ -40,9 +40,7 @@
   when: apache.nfs and apache.vhosts
 
 - name: create vhost entry
-  template: src=vhost.conf.j2
-            dest=/etc/apache2/sites-available/{{ item.server_name }}.conf
-            mode=0644
+  template: src=vhost.conf.j2 dest=/etc/apache2/sites-available/{{ item.server_name }}.conf mode=0644
   with_items: apache.vhosts
   when: apache.vhosts
   notify:
