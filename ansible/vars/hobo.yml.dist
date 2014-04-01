@@ -22,6 +22,6 @@ mysql:
     bind_ip: 0.0.0.0
     root_password: root
 apache:
-    nfs: false
+    nfs: true
     log_root: /vagrant/logs
     vhosts: false

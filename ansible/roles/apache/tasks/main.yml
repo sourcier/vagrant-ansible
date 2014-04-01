@@ -1,18 +1,19 @@
 ---
 
 - name: install apache
-  apt: pkg={{ item }}
-       state=latest
+  apt: pkg={{ item }} state=latest
   with_items:
-      - apache2
-      - apache2-mpm-prefork
+    - apache2
+    - apache2-mpm-prefork
 
 - name: set apache log folder permissions
-  shell: chmod 0755 /var/log/apache2 && find /var/log/apache2 -type f -exec chmod 0644 {} \;
+  shell: chmod 0755 /var/log/apache2 &&
+         find /var/log/apache2 -type f -exec chmod 0644 {} \; &&
+         touch ~{{ ansible_user }}/.flag_set_apache_log_folder_permissions
+         creates=~{{ ansible_user }}/.flag_set_apache_log_folder_permissions
 
 - name: enable modules
-  command: a2enmod {{ item.module }}
-           creates={{ item.creates }}
+  command: a2enmod {{ item.module }} creates={{ item.creates }}
   with_items:
     - { module: rewrite, creates: /etc/apache2/mods-enabled/rewrite.load }
     - { module: vhost_alias, creates: /etc/apache2/mods-enabled/vhost_alias.load }
@@ -26,8 +27,7 @@
   ignore_errors: true
 
 - name: enable php5 module if it exists
-  command: a2enmod php5
-           creates=/etc/apache2/mods-enabled/php5.load
+  command: a2enmod php5 creates=/etc/apache2/mods-enabled/php5.load
   when: php5_module_exists|success
   notify:
     - restart apache
@@ -42,9 +42,7 @@
   when: apache.nfs and apache.vhosts
 
 - name: create vhost entry
-  template: src=vhost.conf.j2
-            dest=/etc/apache2/sites-available/{{ item.server_name }}.conf
-            mode=0644
+  template: src=vhost.conf.j2 dest=/etc/apache2/sites-available/{{ item.server_name }}.conf mode=0644
   with_items: apache.vhosts
   when: apache.vhosts
   notify:
@@ -52,8 +50,8 @@
 
 - name: link vhost entry
   file: src=/etc/apache2/sites-available/{{ item.server_name }}.conf
-    dest=/etc/apache2/sites-enabled/{{ item.server_name }}.conf
-    state=link
+        dest=/etc/apache2/sites-enabled/{{ item.server_name }}.conf
+        state=link
   with_items: apache.vhosts
   when: apache.vhosts
   notify:
