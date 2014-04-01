@@ -1,8 +1,14 @@
 ---
 
 - name: install apache
-  apt: pkg=apache2
+  apt: pkg={{ item }}
        state=latest
+  with_items:
+      - apache2
+      - apache2-mpm-prefork
+
+- name: set apache log folder permissions
+  shell: chmod 0755 /var/log/apache2 && find /var/log/apache2 -type f -exec chmod 0644 {} \;
 
 - name: enable modules
   command: a2enmod {{ item.module }}
@@ -14,11 +20,24 @@
   notify:
     - restart apache
 
+- name: check for php5 module
+  command: test -f /etc/apache2/mods-available/php5.load
+  register: php5_module_exists
+  ignore_errors: true
+
+- name: enable php5 module if it exists
+  command: a2enmod php5
+           creates=/etc/apache2/mods-enabled/php5.load
+  when: php5_module_exists|success
+  notify:
+    - restart apache
+
 - name: mount nfs share
   mount: name=/var/www/{{ item.server_name }}
          src={{ item.nfs_mount }}
          fstype=nfs
          state=mounted
+         opts=defaults,noatime,nodiratime
   with_items: apache.vhosts
   when: apache.nfs and apache.vhosts
 
@@ -28,6 +47,8 @@
             mode=0644
   with_items: apache.vhosts
   when: apache.vhosts
+  notify:
+    - restart apache
 
 - name: link vhost entry
   file: src=/etc/apache2/sites-available/{{ item.server_name }}.conf
@@ -36,4 +57,4 @@
   with_items: apache.vhosts
   when: apache.vhosts
   notify:
-      - restart apache
+    - restart apache

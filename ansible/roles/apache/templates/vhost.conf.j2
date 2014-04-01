@@ -28,9 +28,10 @@
 
     ErrorLog {{apache.log_root}}/{{ item.server_name }}-error.log
     CustomLog {{apache.log_root}}/{{ item.server_name }}-access.log combined
-    LogLevel error rewrite:error
+    LogLevel {{ item.log_level | default('error') }}
     <Directory {{ item.document_root }}>
         AllowOverride all
-        Require all granted
+        Order allow,deny
+        allow from all
     </Directory>
 </VirtualHost>

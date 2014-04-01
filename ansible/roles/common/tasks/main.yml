@@ -1,7 +1,11 @@
 ---
 
+- name: install packages needed for anisble
+  apt: pkg={{ item }}
+       state=latest
+  with_items:
+    - python-pycurl
+    - python-mysqldb
+
 - include: apt.yml
 - include: git.yml
-- include: nfs.yml
-- include: ntp.yml
-- include: sendmail.yml
