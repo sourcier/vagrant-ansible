@@ -5,22 +5,12 @@ VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-    config.vm.box = 'precise64'
+    config.vm.box = 'debian74'
 
     config.vm.provider :vmware_fusion do |vmware_fusion, override|
         vmware_fusion.vmx['memsize'] = 1024
         vmware_fusion.vmx['numvcpus'] = 2
-        override.vm.box_url = 'http://files.vagrantup.com/precise64_vmware.box'
-    end
-
-    config.vm.provider :virtualbox do |virtualbox, override|
-        virtualbox.customize [
-            'modifyvm', :id,
-            '--memory', 1024,
-            '--cpus', 2,
-            '--vram', 16
-        ]
-        override.vm.box_url = 'http://files.vagrantup.com/precise64.box'
+        override.vm.box_url = 'http://kitchen.ragusource.com/vagrant/debian74.box'
     end
 
     #config.vm.provider :digital_ocean do |digital_ocean, override|
