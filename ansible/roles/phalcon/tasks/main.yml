@@ -25,6 +25,8 @@
 - name: install phalcon
   command: ./install chdir=~{{ ansible_user }}/cphalcon/build
   when: phalcon.version not in phalcon_check.stdout
+  notify:
+    - restart apache
 
 - name: add phalcon configs
   copy: src=phalcon.ini dest={{ item }} mode=0644
