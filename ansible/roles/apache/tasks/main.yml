@@ -21,6 +21,11 @@
   notify:
     - restart apache
 
+- name: set apache fqdn
+  template: src=fqdn.j2 dest=/etc/apache2/conf.d/fqdn mode=0644
+  notify:
+    - restart apache
+
 - name: check for php5 module
   command: test -f /etc/apache2/mods-available/php5.load
   register: php5_module_exists
@@ -37,7 +42,7 @@
          src={{ item.nfs_mount }}
          fstype=nfs
          state=mounted
-         opts=defaults,noatime,nodiratime
+         opts=defaults,noatime,nodiratime,rsize=4096,wsize=4096
   with_items: apache.vhosts
   when: apache.nfs and apache.vhosts
 
