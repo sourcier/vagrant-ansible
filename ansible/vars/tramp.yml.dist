@@ -17,7 +17,7 @@ timezone: Europe/London
     modules:
         - php5-xdebug
 phalcon:
-    version: 1.3.0
+    version: 1.3.1
 mysql:
     bind_ip: 0.0.0.0
     root_password: root
