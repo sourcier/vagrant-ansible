@@ -12,6 +12,7 @@
 - name: install common packages
   apt: pkg={{ item }} state=latest
   with_items:
+    - build-essential
     - python-pycurl
     - python-mysqldb
     - git
