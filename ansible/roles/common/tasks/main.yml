@@ -6,8 +6,8 @@
 - name: update apt cache if cache is older than 1 day
   apt: update_cache=yes cache_valid_time=86400
 
-#- name: enable bootlogd
-#  service: name=bootlogd state=started enabled=yes
+- name: enable bootlogd
+  copy: src=bootlogd dest=/etc/default/bootlogd mode=0644
 
 - name: install common packages
   apt: pkg={{ item }} state=latest

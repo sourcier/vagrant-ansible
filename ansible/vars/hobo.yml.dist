@@ -24,5 +24,4 @@ mysql:
 apache:
     fqdn: hobo
     nfs: true
-    log_root: /vagrant/logs
     vhosts: false

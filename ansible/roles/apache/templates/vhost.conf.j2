@@ -26,9 +26,10 @@
         {% endfor%}
     {% endif %}
 
-    ErrorLog /var/www/{{ item.server_name }}/log/{{ item.server_name }}-error.log
-    CustomLog /var/www/{{ item.server_name }}/log/{{ item.server_name }}-access.log combined
+    ErrorLog ${APACHE_LOG_DIR}/{{ item.server_name }}-error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ item.server_name }}-access.log combined
     LogLevel {{ item.log_level | default('error') }}
+
     <Directory {{ item.document_root }}>
         {{ item.options | default('Options Indexes FollowSymLinks MultiViews') }}
         AllowOverride all

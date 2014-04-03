@@ -24,5 +24,4 @@ mysql:
 apache:
     fqdn: tramp
     nfs: false
-    log_root: /vagrant/logs
     vhosts: false
