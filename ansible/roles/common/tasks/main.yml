@@ -1,13 +1,21 @@
 ---
 
+- name: update apt source file to use uk mirrors
+  copy: src=sources.list dest=/etc/apt/sources.list mode=0644
+
 - name: update apt cache if cache is older than 1 day
-  apt: update_cache=yes
-       cache_valid_time=86400
+  apt: update_cache=yes cache_valid_time=86400
+
+- name: enable bootlogd
+  copy: src=bootlogd dest=/etc/default/bootlogd mode=0644
 
 - name: install common packages
-  apt: pkg={{ item }}
-       state=latest
+  apt: pkg={{ item }} state=latest
   with_items:
+    - build-essential
     - python-pycurl
     - python-mysqldb
     - git
+
+- include: ntp.yml
+- include: nfs.yml

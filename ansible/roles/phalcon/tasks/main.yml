@@ -6,9 +6,11 @@
     - php5-dev
     - php5-mysql
     - gcc
+    - re2c
+    - libpcre3-dev
 
 - name: checkout phalcon
-  command: git clone --depth=1 git://github.com/phalcon/cphalcon.git
+  command: git clone --depth=1 https://github.com/phalcon/cphalcon.git
            chdir=~{{ ansible_user }}
            creates=~{{ ansible_user }}/cphalcon
 
@@ -33,3 +35,5 @@
   with_items:
     - /etc/php5/apache2/conf.d/20-phalcon.ini
     - /etc/php5/cli/conf.d/20-phalcon.ini
+  notify:
+    - restart apache
