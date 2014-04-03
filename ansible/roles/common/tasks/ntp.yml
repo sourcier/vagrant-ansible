@@ -1,8 +1,7 @@
 ---
 
 - name: Install ntp
-  apt: pkg=ntp
-       state=latest
+  apt: pkg=ntp state=latest
 
 - name: Update timezone
   shell: echo {{ timezone }} > /etc/timezone && touch /home/{{ ansible_user }}/.flag_timezone
