@@ -4,7 +4,6 @@
   apt: pkg={{ item }} state=latest
   with_items:
     - apache2
-    - apache2-mpm-prefork
 
 - name: set apache log folder permissions
   shell: chmod 0755 /var/log/apache2 &&
@@ -21,10 +20,10 @@
   notify:
     - restart apache
 
-- name: set apache fqdn
-  template: src=fqdn.j2 dest=/etc/apache2/conf.d/fqdn mode=0644
-  notify:
-    - restart apache
+#- name: set apache fqdn
+#  template: src=fqdn.j2 dest=/etc/apache2/conf.d/fqdn mode=0644
+#  notify:
+#    - restart apache
 
 - name: check for php5 module
   command: test -f /etc/apache2/mods-available/php5.load
