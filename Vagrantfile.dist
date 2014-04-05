@@ -3,9 +3,12 @@
 
 VAGRANTFILE_API_VERSION = '2'
 
+Vagrant.require_version ">= 1.5.1"
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.box = 'hashicorp/precise64'
+    config.vm.box_check_update = false
 
     config.vm.provider :vmware_fusion do |vmware_fusion, override|
         vmware_fusion.vmx['memsize'] = 1024
