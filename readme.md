@@ -99,3 +99,25 @@ If you do not have the Digital Ocean provider installed, issue the following com
 ```bash
 $ vagrant plugin install vagrant-digitalocean
 ```
+
+## Known Issues
+
+### Phalcon fails to build
+
+If you get the following error when trying to compile phalcon:
+
+```
+Error: no such instruction: `vfmadd312sd .LC2013(%rip),%xmm0,%xmm1'
+```
+
+You can manually build phalcon by:
+
+```bash
+$ vagrant ssh
+$ cd cphalcon/build/64bits
+$ sudo ./configure --enable-phalcon
+$ sudo make
+$ sudo make install
+$ sudo cp /vagrant/ansible/roles/phalcon/files/phalcon.ini /etc/php5/apache2/conf.d/.
+$ sudo cp /vagrant/ansible/roles/phalcon/files/phalcon.ini /etc/php5/cli/conf.d/.
+```
