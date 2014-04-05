@@ -28,7 +28,7 @@
 
     ErrorLog ${APACHE_LOG_DIR}/{{ item.server_name }}-error.log
     CustomLog ${APACHE_LOG_DIR}/{{ item.server_name }}-access.log combined
-    LogLevel {{ item.log_level | default('error') }}
+    LogLevel {{ item.log_level | default('error rewrite:error') }}
 
     <Directory {{ item.document_root }}>
         {{ item.options | default('Options Indexes FollowSymLinks MultiViews') }}

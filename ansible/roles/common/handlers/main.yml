@@ -7,3 +7,6 @@
   command: dpkg-reconfigure -f noninteractive tzdata
   notify:
     - restart ntp
+
+- name: restart sshd
+  service: name=ssh state=restarted enabled=yes

@@ -4,7 +4,7 @@
   apt: pkg=ntp state=latest
 
 - name: Update timezone
-  shell: echo {{ timezone }} > /etc/timezone && touch /home/{{ ansible_user }}/.flag_timezone
-         creates=/home/{{ ansible_user }}/.flag_timezone
+  shell: echo {{ timezone }} > /etc/timezone && touch ~{{ ansible_user }}/.flag_timezone
+         creates=~{{ ansible_user }}/.flag_timezone
   notify:
     - update timezone

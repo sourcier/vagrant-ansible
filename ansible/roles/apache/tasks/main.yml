@@ -46,7 +46,7 @@
          src={{ item.nfs_mount }}
          fstype=nfs
          state=mounted
-         opts=defaults,noatime,nodiratime,rsize=4096,wsize=4096
+         opts=defaults,noatime,nodiratime,rsize=8192,wsize=8192,hard,intr
   with_items: apache.vhosts
   when: apache.nfs and apache.vhosts
 

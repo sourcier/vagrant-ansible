@@ -1,0 +1,16 @@
+---
+
+- name: update apt source file to use uk mirrors
+  copy: src=sources.list dest=/etc/apt/sources.list mode=0644
+
+- name: update apt cache if cache is older than 1 day
+  apt: update_cache=yes cache_valid_time=86400
+
+- name: install packages required for vagrant
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python-pycurl
+    - python-mysqldb
+
+- name: add ppa:ondrej/php5 repo
+  apt_repository: repo=ppa:ondrej/php5

@@ -1,8 +1,5 @@
 ---
 
-- name: add ppa:ondrej/php5
-  apt_repository: repo=ppa:ondrej/php5
-
 - name: install php
   apt: pkg=php5 state=latest
 
