@@ -1,0 +1,6 @@
+---
+
+- name: update sshd config
+  copy: src=sshd_config dest=/etc/ssh/sshd_config mode=0644
+  notify:
+    - restart sshd

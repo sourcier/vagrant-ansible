@@ -1,6 +1,5 @@
 - name: install php modules
-  apt: pkg={{ item }}
-       state=latest
+  apt: pkg={{ item }} state=latest
   with_items: php.modules
   notify:
-      - restart apache
+    - restart apache

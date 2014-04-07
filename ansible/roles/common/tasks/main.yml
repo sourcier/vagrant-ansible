@@ -1,7 +1,7 @@
 ---
 
+- include: sshd.yml
 - include: apt.yml
-- include: git.yml
-- include: nfs.yml
 - include: ntp.yml
-- include: sendmail.yml
+- include: nfs.yml
+- include: packages.yml

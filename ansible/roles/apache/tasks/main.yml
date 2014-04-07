@@ -1,16 +1,43 @@
 ---
 
 - name: install apache
-  apt: pkg=apache2
-       state=latest
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - apache2
+
+- name: set apache log folder permissions
+  shell: chmod 0755 /var/log/apache2 &&
+         find /var/log/apache2 -type f -exec chmod 0644 {} \; &&
+         touch ~{{ ansible_user }}/.flag_set_apache_log_folder_permissions
+         creates=~{{ ansible_user }}/.flag_set_apache_log_folder_permissions
 
 - name: enable modules
-  command: a2enmod {{ item.module }}
-           creates={{ item.creates }}
+  command: a2enmod {{ item.module }} creates={{ item.creates }}
   with_items:
     - { module: rewrite, creates: /etc/apache2/mods-enabled/rewrite.load }
     - { module: vhost_alias, creates: /etc/apache2/mods-enabled/vhost_alias.load }
     - { module: headers, creates: /etc/apache2/mods-enabled/headers.load }
+  notify:
+    - restart apache
+
+- name: create apache fqdn conf
+  template: src=fqdn.j2 dest=/etc/apache2/conf-available/fqdn.conf mode=0644
+  notify:
+      - restart apache
+
+- name: link apache fqdn conf
+  file: src=/etc/apache2/conf-available/fqdn.conf dest=/etc/apache2/conf-enabled/fqdn.conf state=link
+  notify:
+    - restart apache
+
+- name: check for php5 module
+  command: test -f /etc/apache2/mods-available/php5.load
+  register: php5_module_exists
+  ignore_errors: true
+
+- name: enable php5 module if it exists
+  command: a2enmod php5 creates=/etc/apache2/mods-enabled/php5.load
+  when: php5_module_exists|success
   notify:
     - restart apache
 
@@ -19,21 +46,22 @@
          src={{ item.nfs_mount }}
          fstype=nfs
          state=mounted
+         opts=defaults,noatime,nodiratime,rsize=8192,wsize=8192,hard,intr
   with_items: apache.vhosts
   when: apache.nfs and apache.vhosts
 
-- name: create vhost entry
-  template: src=vhost.conf.j2
-            dest=/etc/apache2/sites-available/{{ item.server_name }}.conf
-            mode=0644
-  with_items: apache.vhosts
-  when: apache.vhosts
-
-- name: link vhost entry
-  file: src=/etc/apache2/sites-available/{{ item.server_name }}.conf
-    dest=/etc/apache2/sites-enabled/{{ item.server_name }}.conf
-    state=link
+- name: create vhost entries
+  template: src=vhost.conf.j2 dest=/etc/apache2/sites-available/{{ item.server_name }}.conf mode=0644
   with_items: apache.vhosts
   when: apache.vhosts
   notify:
       - restart apache
+
+- name: link vhost entries
+  file: src=/etc/apache2/sites-available/{{ item.server_name }}.conf
+        dest=/etc/apache2/sites-enabled/{{ item.server_name }}.conf
+        state=link
+  with_items: apache.vhosts
+  when: apache.vhosts
+  notify:
+    - restart apache
