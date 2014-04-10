@@ -14,7 +14,7 @@
            chdir=~{{ ansible_user }}
            creates=~{{ ansible_user }}/cphalcon
 
-- name: check of phalcon is installed
+- name: check if phalcon is installed
   command: php --ri phalcon
   ignore_errors: true
   register: phalcon_check
