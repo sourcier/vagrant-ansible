@@ -1,4 +1,6 @@
 ---
 
 - include: php.yml
+- include: ioncube.yml
+  when: php.ioncube | default(false)
 - include: modules.yml

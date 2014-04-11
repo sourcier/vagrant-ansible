@@ -1,0 +1,23 @@
+---
+
+- name: download ioncube module
+  command:
+    wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+    creates=~{{ ansible_user }}/ioncube_loaders_lin_x86-64.tar.gz
+
+- name: extract ioncube module files
+  command: tar -zxvf ioncube_loaders_lin_x86-64.tar.gz
+    creates=~{{ ansible_user }}/ioncube_loaders_lin_x86-64
+
+- name: copy ioncube module to php module folder
+  shell: cp ~{{ ansible_user }}/ioncube/ioncube_loader_lin_5.5.so /usr/lib/php5/20121212/ioncube_loader_lin_5.5.so &&
+    chmod 644 /usr/lib/php5/20121212/ioncube_loader_lin_5.5.so
+    creates=/usr/lib/php5/20121212/ioncube_loader_lin_5.5.so
+
+- name: add ioncube configs
+  copy: src=ioncube.ini dest={{ item }} mode=0644
+  with_items:
+    - /etc/php5/apache2/conf.d/00-ioncube.ini
+    - /etc/php5/cli/conf.d/00-ioncube.ini
+  notify:
+    - restart apache
