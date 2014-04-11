@@ -20,6 +20,8 @@ php:
         - php5-mysql
         - php5-imagick
         - php5-curl
+    ioncube: false
+    phalcon: false
 phalcon:
     version: 1.3.1
 mysql:

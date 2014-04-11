@@ -26,6 +26,37 @@ $ ant init
 Edit Vagrantfile if you need make any changes. If you modify the IP address for hobo you will also need to update the
 inventory file located here: anisble/inventory.ini.
 
+## PHP modules
+
+There are two types of modules that can be installed, ones provided by apt and ones that have to be built. You can easily add
+apt provided modules by adding them to the modules node under the php node:
+
+```yml
+php:
+    modules:
+        - php5-xdebug
+        - php5-mysql
+```
+
+__php5-xdebug is enabled by default__
+
+The are currently two modules (phalcon, ioncube) that can be built and added, you can enable them by setting the relevant node
+to true under the php node:
+
+### Ioncube
+
+```yml
+php:
+    ioncube: true
+```
+
+### Phalcon
+
+```yml
+php:
+    phalcon: true
+```
+
 ## Add virtual hosts
 
 Open the ansible extra vars file for the host ```ansible/vars/<host>.yml```, add extra virtual hosts by adding the
