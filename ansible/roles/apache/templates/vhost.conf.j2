@@ -1,6 +1,9 @@
 <VirtualHost *:80>
+
     ServerName {{ item.server_name }}
-    {% if item.server_aliases is defined %} {{ item.server_aliases|join(' ')}} {% endif %}
+
+    {% if item.server_aliases is defined %}ServerAlias {{ item.server_aliases|join(' ')}}{% endif %}
+
     DocumentRoot {{ item.document_root }}
     RewriteEngine On
     DirectoryIndex {{ item.directory_index | default('index.html index.php') }}
