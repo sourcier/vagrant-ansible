@@ -5,7 +5,9 @@
     {% if item.server_aliases is defined %}ServerAlias {{ item.server_aliases|join(' ')}}{% endif %}
 
     DocumentRoot {{ item.document_root }}
+
     RewriteEngine On
+
     DirectoryIndex {{ item.directory_index | default('index.html index.php') }}
 
     # Set environment variables
@@ -30,7 +32,9 @@
     {% endif %}
 
     ErrorLog ${APACHE_LOG_DIR}/{{ item.server_name }}-error.log
+
     CustomLog ${APACHE_LOG_DIR}/{{ item.server_name }}-access.log combined
+
     LogLevel {{ item.log_level | default('error rewrite:error') }}
 
     <Directory {{ item.document_root }}>
