@@ -1,0 +1,7 @@
+---
+
+# file: group_vars/dbservers.example.yml
+
+mysql:
+    bind_ip: 0.0.0.0
+    root_password: root

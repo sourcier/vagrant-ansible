@@ -39,17 +39,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         hobo.vm.network :private_network, ip: '10.0.0.3'
         hobo.vm.hostname = 'hobo'
         hobo.vm.provision 'ansible' do |ansible|
-            ansible.inventory_path = 'ansible/inventory.ini'
-            ansible.playbook = 'ansible/hobo.yml'
+            ansible.inventory_path = 'ansible/inventory/development.ini'
+            ansible.playbook = 'ansible/site.yml'
             ansible.host_key_checking = false
-            ansible.extra_vars = '@ansible/vars/hobo.yml'
+            ansible.extra_vars = '@ansible/host_vars/hobo.yml'
         end
     end
 
     #config.vm.define :tramp, primary: false do |tramp|
     #    vagabond.vm.hostname = 'tramp'
     #    vagabond.vm.provision 'ansible' do |ansible|
-    #        ansible.inventory_path = 'ansible/inventory.ini'
+    #        ansible.inventory_path = 'ansible/inventory/production.ini'
     #        ansible.playbook = 'ansible/tramp.yml'
     #        ansible.host_key_checking = false
     #        ansible.extra_vars = '@ansible/vars/tramp.yml'
