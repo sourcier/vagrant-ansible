@@ -17,8 +17,6 @@
 # escpecially if they contain "#" chars...
 # Remember to edit /etc/mysql/debian.cnf when changing the socket location.
 [client]
-user        = root
-password    = {{ mysql.root_password }}
 port		= 3306
 socket		= /var/run/mysqld/mysqld.sock
 
