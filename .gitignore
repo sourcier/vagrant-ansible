@@ -4,8 +4,8 @@
 /logs/*
 /.vagrant/*
 /atlassian-ide-plugin.xml
-/ansible/inventory.ini
-/ansible/vars/tramp.yml
-/ansible/tramp.yml
-/ansible/vars/hobo.yml
-/ansible/hobo.yml
+/ansible/group_vars/all.yml
+/ansible/group_vars/dbservers.yml
+/ansible/group_vars/webservers.yml
+/ansible/host_vars/hobo.yml
+/ansible/host_vars/tramp.yml
