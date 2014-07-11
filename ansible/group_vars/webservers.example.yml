@@ -25,7 +25,10 @@ php:
         - php5-intl
     ioncube: false
     phalcon: false
+hhvm:
+    enabled: false
 apache:
     fqdn: ~
     nfs: true
     vhosts: false
+    modules: false

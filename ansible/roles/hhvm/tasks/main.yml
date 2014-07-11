@@ -1,0 +1,23 @@
+---
+
+- name: check if ppa_mapnik_boost_precise.list is added
+  command: test -f /etc/apt/sources.list.d/ppa_mapnik_boost_precise.list
+  ignore_errors: true
+  register: ppa_mapnik_boost_check
+
+- name: add ppa:mapnik/boost repo
+  apt_repository: repo=ppa:mapnik/boost
+  when: ppa_mapnik_boost_check|failed
+
+- name: add hhvm.gpg.key to apt
+  apt_key: url=http://dl.hhvm.com/conf/hhvm.gpg.key state=present
+
+- name: add hhvm sources
+  shell: echo deb http://dl.hhvm.com/ubuntu precise main | sudo tee /etc/apt/sources.list.d/hhvm.list
+         creates=/etc/apt/sources.list.d/hhvm.list
+  register: hhvm_sources_check
+
+- name: install hhvm
+  apt: name=hhvm update_cache=yes
+  notify:
+    - restart hhvm

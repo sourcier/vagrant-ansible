@@ -12,11 +12,8 @@
          creates=~{{ ansible_ssh_user }}/.flag_set_apache_log_folder_permissions
 
 - name: enable modules
-  command: a2enmod {{ item.module }} creates={{ item.creates }}
-  with_items:
-    - { module: rewrite, creates: /etc/apache2/mods-enabled/rewrite.load }
-    - { module: vhost_alias, creates: /etc/apache2/mods-enabled/vhost_alias.load }
-    - { module: headers, creates: /etc/apache2/mods-enabled/headers.load }
+  command: a2enmod {{ item }} creates=/etc/apache2/mods-enabled/{{ item }}.load
+  with_items: apache.modules
   notify:
     - restart apache
 

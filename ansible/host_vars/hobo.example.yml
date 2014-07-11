@@ -5,3 +5,4 @@ apache:
     fqdn: hobo
     nfs: true
     vhosts: false
+    modules: false
