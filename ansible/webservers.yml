@@ -7,3 +7,4 @@
     - php
     - {role: hhvm, when: hhvm.enabled}
     - apache
+    - memcached
