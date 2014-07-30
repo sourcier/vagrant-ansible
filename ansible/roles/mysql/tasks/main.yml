@@ -8,7 +8,15 @@
   notify:
     - restart mysql
 
-- name: enable remote mysql login
+- name: change root password
+  shell: mysqladmin -u root password {{ mysql.root_password }}
+  notify:
+      - restart mysql
+
+- name: copy .my.cnf file with root password credentials
+  template: src=.my.cnf.j2 dest=~/.my.cnf mode=0600
+
+- name: set root user privileages
   mysql_user: name=root
               password={{ mysql.root_password }}
               host={{ item }}
@@ -17,9 +25,6 @@
   with_items: mysql.hosts
   notify:
     - restart mysql
-
-- name: copy .my.cnf file with root password credentials
-  template: src=.my.cnf.j2 dest=~/.my.cnf mode=0600
 
 - name: ensure anonymous users are not in the database
   mysql_user: name='' host={{ item }} state=absent
