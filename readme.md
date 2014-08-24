@@ -71,7 +71,7 @@ log_root: "/vagrant/logs"
 vhosts:
   - server_name: "example.dev"
     document_root: "/var/www/example.dev/public"
-    nfs_mount: "10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web"
+    nfs_mount: "10.0.0.1:/Volumes/RAGUSOURCE/ragusource-web"
 ```
 
 The apache.vhost node is a collection and multiple vhosts can be added. The following optional params can be added to each vhost:
