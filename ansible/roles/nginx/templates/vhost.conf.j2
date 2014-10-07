@@ -1,0 +1,49 @@
+server {
+    listen {{ item.port | default('80') }};
+
+    server_name {{ item.server_name }};
+
+    root {{ item.document_root }};
+
+    index {{ item.indexes | default('app.php index.php index.html index.htm') }};
+
+    error_log /var/log/nginx/{{ item.server_name }}.error.log;
+
+    access_log /var/log/nginx/{{ item.server_name }}.access.log;
+
+    # Disable access to hidden files
+    location ~ /\. {
+        access_log off;
+        log_not_found off;
+        deny all;
+    }
+
+    {% if item.symfony %}
+        # strip app.php/ prefix if it is present
+        rewrite ^/app\.php/?(.*)$ /$1 permanent;
+
+        location @rewriteapp
+        {
+            rewrite ^(.*)$ /app.php/$1 last;
+        }
+    {% endif %}
+
+    location /
+    {
+        {% if item.symfony %}
+            try_files $uri @rewriteapp;
+        {% else %}
+            try_files $uri $uri/ =404;
+        {% endif %}
+    }
+
+    # Pass PHP scripts to PHP-FPM
+    location ~ \.php(/|$)
+    {
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS off;
+    }
+}

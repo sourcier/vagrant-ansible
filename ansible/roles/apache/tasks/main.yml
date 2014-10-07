@@ -1,9 +1,7 @@
 ---
 
 - name: install apache
-  apt: pkg={{ item }} state=latest
-  with_items:
-    - apache2
+  apt: pkg=apache2 state=latest
 
 - name: set apache log folder permissions
   shell: chmod 0755 /var/log/apache2 &&
@@ -37,15 +35,6 @@
   when: php5_module_exists|success
   notify:
     - restart apache
-
-- name: mount nfs share
-  mount: name=/var/www/{{ item.server_name }}
-         src={{ item.nfs_mount }}
-         fstype=nfs
-         state=mounted
-         opts=defaults,noatime,nodiratime,rsize=8192,wsize=8192,hard,intr
-  with_items: apache.vhosts
-  when: apache.nfs and apache.vhosts
 
 - name: create vhost entries
   template: src=vhost.conf.j2 dest=/etc/apache2/sites-available/{{ item.server_name }}.conf mode=0644

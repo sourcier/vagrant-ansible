@@ -3,5 +3,4 @@
 - include: sshd.yml
 - include: apt.yml
 - include: ntp.yml
-- include: nfs.yml
 - include: packages.yml

@@ -4,7 +4,8 @@
 
 - hosts: webservers
   roles:
+    - nfs
     - php
     - {role: hhvm, when: hhvm.enabled}
-    - apache
     - memcached
+    - nginx
