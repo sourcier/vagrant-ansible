@@ -1,4 +1,5 @@
-127.0.0.1	localhost
+127.0.0.1   localhost
+127.0.0.1   {{ ansible_hostname }}
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback
@@ -7,6 +8,6 @@ ff02::2 ip6-allrouters
 
 # apache hosts
 {% for vhost in vhosts %}
-    127.0.0.1 {{ vhost.server_name }}
-    {% if vhost.server_aliases is defined %}127.0.0.1 {{ vhost.server_aliases|join(' ')}}{% endif %}
+127.0.0.1   {{ vhost.server_name }}
+{% if vhost.server_aliases is defined %}127.0.0.1   {{ vhost.server_aliases|join(' ')}}{% endif %}
 {% endfor %}
