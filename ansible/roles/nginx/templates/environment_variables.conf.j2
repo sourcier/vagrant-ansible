@@ -1,0 +1,5 @@
+{% if item.environment_variables is defined %}
+    {% for variable in item.environment_variables %}
+        fastcgi_param {{ variable.name }} {{ variable.value }};
+    {% endfor %}
+{% endif %}
