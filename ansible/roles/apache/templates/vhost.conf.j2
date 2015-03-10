@@ -1,0 +1,50 @@
+<VirtualHost *:80>
+
+    ServerName {{ item.server_name }}
+
+    {% if item.server_aliases is defined %}ServerAlias {{ item.server_aliases|join(' ')}}{% endif %}
+
+    DocumentRoot {{ item.document_root }}
+
+    {% if item.headers is defined %}
+        ProxyPassMatch ^/(.*\.hh(/.*)?)$ fcgi://127.0.0.1:9000{{ item.document_root }}/$1
+    {% endif %}
+
+    RewriteEngine On
+
+    DirectoryIndex {{ item.directory_index | default('index.html index.php') }}
+
+    # Set environment variables
+    {% if item.env_variables is defined %}
+        {% for env_variable in item.env_variables %}
+            SetEnv {{ env_variable.name }} {{ env_variable.value }}
+        {% endfor %}
+    {% endif %}
+
+    # Set custom headers
+    {% if item.headers is defined %}
+        {% for header in item.headers %}
+            Header set {{ header.name }} {{ header.value }}
+        {% endfor %}
+    {% endif %}
+
+    # Set additional file types
+    {% if item.types is defined %}
+        {% for type in item.types %}
+                AddType {{ type.handler }} {{ type.extensions|join(' ') }}
+        {% endfor%}
+    {% endif %}
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ item.server_name }}-error.log
+
+    CustomLog ${APACHE_LOG_DIR}/{{ item.server_name }}-access.log combined
+
+    LogLevel {{ item.log_level | default('error rewrite:error') }}
+
+    <Directory {{ item.document_root }}>
+        {{ item.options | default('Options Indexes FollowSymLinks MultiViews') }}
+        AllowOverride all
+        Order allow,deny
+        allow from all
+    </Directory>
+</VirtualHost>

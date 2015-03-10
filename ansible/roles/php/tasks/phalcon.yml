@@ -28,7 +28,7 @@
   command: ./install chdir=~{{ ansible_ssh_user }}/cphalcon/build
   when: phalcon.version not in phalcon_check.stdout
   notify:
-    - restart nginx
+    - restart apache
 
 - name: add phalcon configs
   copy: src=phalcon.ini dest={{ item }} mode=0644
@@ -36,4 +36,4 @@
     - /etc/php5/apache2/conf.d/20-phalcon.ini
     - /etc/php5/cli/conf.d/20-phalcon.ini
   notify:
-    - restart nginx
+    - restart apache

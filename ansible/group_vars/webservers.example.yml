@@ -27,3 +27,8 @@ php:
     phalcon: false
 hhvm:
     enabled: false
+apache:
+    fqdn: ~
+    nfs: true
+    vhosts: false
+    modules: false
