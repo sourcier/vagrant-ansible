@@ -1,8 +1,5 @@
 ---
 
-- name: update apt source file to use uk mirrors
-  copy: src=sources.list dest=/etc/apt/sources.list mode=0644
-
 - name: update apt cache if cache is older than 1 day
   apt: update_cache=yes cache_valid_time=86400
 
@@ -11,12 +8,3 @@
   with_items:
     - python-pycurl
     - python-mysqldb
-
-- name: check if ppa:ondrej/php5 is added
-  command: test -f /etc/apt/sources.list.d/ppa_ondrej_php5_precise.list
-  ignore_errors: true
-  register: ppa_ondrej_check
-
-- name: add ppa:ondrej/php5 repo
-  apt_repository: repo=ppa:ondrej/php5
-  when: ppa_ondrej_check|failed

@@ -7,5 +7,6 @@
     - nfs
     - php
     - {role: hhvm, when: hhvm.enabled}
-    - memcached
-    - nginx
+    - {role: memcached, when: memcached.enabled}
+    - {role: nginx, when: nginx.enabled}
+    - {role: apache, when: apache.enabled}

@@ -2,6 +2,8 @@
 
 - name: restart apache
   service: name=apache2 state=restarted enabled=yes
+  when: apache.enabled
 
 - name: restart nginx
   service: name=nginx state=restarted enabled=yes
+  when: nginx.enabled
