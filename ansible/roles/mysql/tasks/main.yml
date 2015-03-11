@@ -3,18 +3,19 @@
 - name: install mysql server
   apt: pkg=mysql-server state=latest
 
-- name: Copy the my.cnf file
-  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf mode=0644
-  notify:
-    - restart mysql
-
 - name: change root password
   shell: mysqladmin -u root password {{ mysql.root_password }}
   notify:
       - restart mysql
 
-- name: copy .my.cnf file with root password credentials
-  template: src=.my.cnf.j2 dest=~/.my.cnf mode=0600
+- name: Copy config templates into place
+  template: src={{ item.src }} dest={{ item.dest }} mode=0644
+  with_items:
+    - {src: bind-address.cnf.j2, dest: /etc/mysql/conf.d/bind-address.cnf, mode: 0644}
+    - {src: innodb_file_per_table.cnf.j2, dest: /etc/mysql/conf.d/innodb_file_per_table.cnf, mode: 0644}
+    - {src: .my.cnf.j2, dest: ~/.my.cnf, mode: 0600}
+  notify:
+    - restart mysql
 
 - name: set root user privileages
   mysql_user: name=root
