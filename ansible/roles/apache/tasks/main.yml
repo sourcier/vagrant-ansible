@@ -4,7 +4,6 @@
   apt: pkg={{ item}} state=latest
   with_items:
     - apache2
-    #- apache2-mpm-event
     - libapache2-mod-fastcgi
 
 - name: set apache log folder permissions
@@ -51,7 +50,7 @@
       - restart apache
 
 - name: enable apache sites
-  command: a2ensite {{ item }} creates=/etc/apache2/sites-enabled/{{ item.server_name }}.conf
+  command: a2ensite {{ item.server_name }} creates=/etc/apache2/sites-enabled/{{ item.server_name }}
   with_items: vhosts
   notify:
     - restart apache

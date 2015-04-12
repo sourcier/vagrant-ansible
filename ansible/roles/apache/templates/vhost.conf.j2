@@ -11,9 +11,9 @@
     DirectoryIndex {{ item.directory_index | default('index.html index.php') }}
 
     # Set environment variables
-    {% if item.env_variables is defined %}
-        {% for env_variable in item.env_variables %}
-            SetEnv {{ env_variable.name }} {{ env_variable.value }}
+    {% if item.environment_variables is defined %}
+        {% for environment_variable in item.environment_variables %}
+            SetEnv {{ environment_variable.name }} {{ environment_variable.value }}
         {% endfor %}
     {% endif %}
 
