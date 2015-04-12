@@ -1,6 +1,4 @@
 ---
 
-# file: group_vars/common.yml
-
 gather_facts: false
 timezone: Europe/London
