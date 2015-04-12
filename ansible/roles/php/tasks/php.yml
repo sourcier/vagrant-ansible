@@ -15,9 +15,3 @@
   notify:
     - restart nginx
     - restart apache
-
-- name: update php configs
-  template: src=php.ini.j2 dest=/etc/php5/apache2/php.ini mode=0644
-  when: apache.enabled
-  notify:
-    - restart apache

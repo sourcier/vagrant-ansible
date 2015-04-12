@@ -1,8 +1,8 @@
 ---
+
 ansible_ssh_user: vagrant
 sudo: true
 apache:
+    enabled: true
     fqdn: hobo
-    nfs: true
-    vhosts: false
-    modules: false
+    modules: ~

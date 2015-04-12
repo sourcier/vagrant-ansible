@@ -1,7 +1,5 @@
 ---
 
-# file: group_vars/webservers.example.yml
-
 php:
     options:
         date.timezone: Europe/London
@@ -27,9 +25,12 @@ php:
     ioncube: false
     phalcon: false
 hhvm:
-    enabled: false
+    enabled: ~
 apache:
+    enabled: ~
     fqdn: ~
-    nfs: true
-    vhosts: false
-    modules: false
+    modules: ~
+nginx:
+    enabled: ~
+memcached:
+    enabled: ~

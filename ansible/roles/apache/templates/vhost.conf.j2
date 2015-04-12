@@ -6,10 +6,6 @@
 
     DocumentRoot {{ item.document_root }}
 
-    {% if item.headers is defined %}
-        ProxyPassMatch ^/(.*\.hh(/.*)?)$ fcgi://127.0.0.1:9000{{ item.document_root }}/$1
-    {% endif %}
-
     RewriteEngine On
 
     DirectoryIndex {{ item.directory_index | default('index.html index.php') }}
@@ -47,4 +43,5 @@
         Order allow,deny
         allow from all
     </Directory>
+
 </VirtualHost>
