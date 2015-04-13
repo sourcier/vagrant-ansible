@@ -12,7 +12,7 @@ php:
         xdebug.max_nesting_level: 256
         error_reporting: E_ALL
         display_errors: 1
-        html_errors: 0
+        html_errors: 1
         ignore_repeated_errors: 1
         detect_unicode: 0
         cgi.fix_pathinfo: 0
@@ -22,8 +22,8 @@ php:
         - php5-imagick
         - php5-curl
         - php5-intl
-    ioncube: false
-    phalcon: false
+    ioncube: ~
+    phalcon: ~
 hhvm:
     enabled: ~
 apache:
