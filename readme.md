@@ -2,7 +2,7 @@
 Created: 10 Jan 2014
 Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 Website: http://ragusource.com
-Version: 0.3.0
+Version: 0.3.1
 
 ## Dependencies
 
@@ -65,23 +65,19 @@ following:
 
 ```yml
 ---
-apache:
-nfs: true
-log_root: "/vagrant/logs"
 vhosts:
   - server_name: "example.dev"
     document_root: "/var/www/example.dev/public"
-    nfs_mount: "10.0.0.1:/Volumes/RAGUSOURCE/ragusource-web"
 ```
 
-The apache.vhost node is a collection and multiple vhosts can be added. The following optional params can be added to each vhost:
+The vhosts node is a collection and multiple vhosts can be added. The following optional params can be added to each vhost:
 
 ```yml
 server_aliases: 'example1.dev example2.dev'
 ```
 
 ```yml
-env_variables:
+environment_variables:
     - name: ENVIRONMENT
       value: dev
 ```
@@ -105,30 +101,6 @@ You can start and provision the machine by running the following:
 
 ```bash
 $ vagrant up --provision
-```
-
-## Using the Digital Ocean provider
-
-Uncomment the ```digitalocean_provider``` provider and ```tramp``` config nodes. Insert your Digital Ocean client Id
-API key into the provider section:
-
-```ruby
-provider.client_id = 'xxxx'
-provider.api_key = 'xxxx'
-```
-
-Up the vagrant box using:
-
-```bash
-$ vagrant up tramp --provider=digital_ocean
-```
-
-### Installing the Digital Ocean provider
-
-If you do not have the Digital Ocean provider installed, issue the following command:
-
-```bash
-$ vagrant plugin install vagrant-digitalocean
 ```
 
 ## Known Issues
