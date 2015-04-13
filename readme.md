@@ -2,7 +2,7 @@
 Created: 10 Jan 2014
 Author:  Roger Ragulan Rajaratnam <roger@ragusource.com>
 Website: http://ragusource.com
-Version: 0.3.0
+Version: 0.3.1
 
 ## Dependencies
 
@@ -26,6 +26,37 @@ $ ant init
 Edit Vagrantfile if you need make any changes. If you modify the IP address for hobo you will also need to update the
 inventory file located here: anisble/inventory.ini.
 
+## PHP modules
+
+There are two types of modules that can be installed, ones provided by apt and ones that have to be built. You can easily add
+apt provided modules by adding them to the modules node under the php node:
+
+```yml
+php:
+    modules:
+        - php5-xdebug
+        - php5-mysql
+```
+
+__php5-xdebug is enabled by default__
+
+The are currently two modules (phalcon, ioncube) that can be built and added, you can enable them by setting the relevant node
+to true under the php node:
+
+### Ioncube
+
+```yml
+php:
+    ioncube: true
+```
+
+### Phalcon
+
+```yml
+php:
+    phalcon: true
+```
+
 ## Add virtual hosts
 
 Open the ansible extra vars file for the host ```ansible/vars/<host>.yml```, add extra virtual hosts by adding the
@@ -34,23 +65,19 @@ following:
 
 ```yml
 ---
-apache:
-nfs: true
-log_root: "/vagrant/logs"
 vhosts:
   - server_name: "example.dev"
     document_root: "/var/www/example.dev/public"
-    nfs_mount: "10.0.0.1:/Volumes/Development/RAGUSOURCE/ragusource-web"
 ```
 
-The apache.vhost node is a collection and multiple vhosts can be added. The following optional params can be added to each vhost:
+The vhosts node is a collection and multiple vhosts can be added. The following optional params can be added to each vhost:
 
 ```yml
 server_aliases: 'example1.dev example2.dev'
 ```
 
 ```yml
-env_variables:
+environment_variables:
     - name: ENVIRONMENT
       value: dev
 ```
@@ -74,30 +101,6 @@ You can start and provision the machine by running the following:
 
 ```bash
 $ vagrant up --provision
-```
-
-## Using the Digital Ocean provider
-
-Uncomment the ```digitalocean_provider``` provider and ```tramp``` config nodes. Insert your Digital Ocean client Id
-API key into the provider section:
-
-```ruby
-provider.client_id = 'xxxx'
-provider.api_key = 'xxxx'
-```
-
-Up the vagrant box using:
-
-```bash
-$ vagrant up tramp --provider=digital_ocean
-```
-
-### Installing the Digital Ocean provider
-
-If you do not have the Digital Ocean provider installed, issue the following command:
-
-```bash
-$ vagrant plugin install vagrant-digitalocean
 ```
 
 ## Known Issues

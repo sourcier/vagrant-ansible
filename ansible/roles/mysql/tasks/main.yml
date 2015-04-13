@@ -3,23 +3,35 @@
 - name: install mysql server
   apt: pkg=mysql-server state=latest
 
-- name: set mysql root password
-  command: mysqladmin password {{ mysql.root_password }}
+- name: change root password
+  shell: mysqladmin -u root password {{ mysql.root_password }}
+  notify:
+      - restart mysql
+
+- name: Copy config templates into place
+  template: src={{ item.src }} dest={{ item.dest }} mode=0644
+  with_items:
+    - {src: bind-address.cnf.j2, dest: /etc/mysql/conf.d/bind-address.cnf, mode: 0644}
+    - {src: innodb_file_per_table.cnf.j2, dest: /etc/mysql/conf.d/innodb_file_per_table.cnf, mode: 0644}
+    - {src: .my.cnf.j2, dest: ~/.my.cnf, mode: 0600}
   notify:
     - restart mysql
 
-- name: update mysql config
-  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf mode=0644
-  notify:
-    - restart mysql
-
-- name: enable remote mysql login
+- name: set root user privileages
   mysql_user: name=root
               password={{ mysql.root_password }}
-              host=%
+              host={{ item }}
               priv=*.*:ALL,GRANT
               state=present
-              login_user=root
-              login_password={{ mysql.root_password }}
+  with_items: mysql.hosts
   notify:
     - restart mysql
+
+- name: ensure anonymous users are not in the database
+  mysql_user: name='' host={{ item }} state=absent
+  with_items: mysql.hosts
+  notify:
+    - restart mysql
+
+- name: remove the test database
+  mysql_db: name=test state=absent

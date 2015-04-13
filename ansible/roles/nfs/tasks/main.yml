@@ -1,0 +1,13 @@
+---
+
+- name: Install nfs-common
+  apt: pkg=nfs-common state=latest
+
+- name: mount nfs share
+  mount: name={{ item.destination }}
+         src={{ item.source }}
+         fstype=nfs
+         state=mounted
+         opts=defaults,noatime,nodiratime,rsize=8192,wsize=8192,hard,intr
+  with_items: nfs.mounts
+  when: nfs.enabled and nfs.mounts

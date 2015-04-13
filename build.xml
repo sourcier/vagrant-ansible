@@ -2,19 +2,18 @@
 <project name="ragusource-vagrant" basedir=".">
     <target name="clean">
         <delete file="${basedir}/Vagrantfile"/>
-        <delete file="${basedir}/ansible/inventory.ini"/>
-        <delete file="${basedir}/ansible/hobo.yml"/>
-        <delete file="${basedir}/ansible/vars/hobo.yml"/>
-        <delete file="${basedir}/ansible/tramp.yml"/>
-        <delete file="${basedir}/ansible/vars/tramp.yml"/>
+        <delete file="${basedir}/ansible/host_vars/hobo.yml"/>
+        <delete file="${basedir}/ansible/host_vars/tramp.yml"/>
+        <delete file="${basedir}/ansible/group_vars/all.yml"/>
+        <delete file="${basedir}/ansible/group_vars/webservers.yml"/>
+        <delete file="${basedir}/ansible/group_vars/dbservers.yml"/>
     </target>
     <target name="prepare">
         <copy file="${basedir}/Vagrantfile.dist" tofile="${basedir}/Vagrantfile"/>
-        <copy file="${basedir}/ansible/inventory.ini.dist" tofile="${basedir}/ansible/inventory.ini"/>
-        <copy file="${basedir}/ansible/hobo.yml.dist" tofile="${basedir}/ansible/hobo.yml"/>
-        <copy file="${basedir}/ansible/vars/hobo.yml.dist" tofile="${basedir}/ansible/vars/hobo.yml"/>
-        <copy file="${basedir}/ansible/tramp.yml.dist" tofile="${basedir}/ansible/tramp.yml"/>
-        <copy file="${basedir}/ansible/vars/tramp.yml.dist" tofile="${basedir}/ansible/vars/tramp.yml"/>
+        <copy file="${basedir}/ansible/host_vars/hobo.example.yml" tofile="${basedir}/ansible/host_vars/hobo.yml"/>
+        <copy file="${basedir}/ansible/host_vars/tramp.example.yml" tofile="${basedir}/ansible/host_vars/tramp.yml"/>
+        <copy file="${basedir}/ansible/group_vars/all.example.yml" tofile="${basedir}/ansible/group_vars/all.yml"/>
+        <copy file="${basedir}/ansible/group_vars/webservers.example.yml" tofile="${basedir}/ansible/group_vars/webservers.yml"/>
+        <copy file="${basedir}/ansible/group_vars/dbservers.example.yml" tofile="${basedir}/ansible/group_vars/dbservers.yml"/>
     </target>
-    <target name="init" depends="prepare" />
 </project>

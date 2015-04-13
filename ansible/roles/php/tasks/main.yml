@@ -1,4 +1,11 @@
 ---
 
 - include: php.yml
+
 - include: modules.yml
+
+- include: ioncube.yml
+  when: php.ioncube | default(false)
+
+- include: phalcon.yml
+  when: php.phalcon | default(false)

@@ -1,0 +1,12 @@
+---
+
+# file: common.yml
+
+- hosts: webservers
+  roles:
+    - nfs
+    - php
+    - {role: hhvm, when: hhvm.enabled}
+    - {role: memcached, when: memcached.enabled}
+    - {role: nginx, when: nginx.enabled}
+    - {role: apache, when: apache.enabled}

@@ -2,4 +2,5 @@
   apt: pkg={{ item }} state=latest
   with_items: php.modules
   notify:
+    - restart nginx
     - restart apache

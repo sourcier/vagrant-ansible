@@ -1,0 +1,36 @@
+---
+
+php:
+    options:
+        date.timezone: Europe/London
+        memory_limit: 256M
+        upload_max_filesize: 8M
+        post_max_size: 16M
+        xdebug.idekey: XDEBUG_ECLIPSE
+        xdebug.remote_enable: 1
+        xdebug.remote_host: 10.0.0.1
+        xdebug.max_nesting_level: 256
+        error_reporting: E_ALL
+        display_errors: 1
+        html_errors: 1
+        ignore_repeated_errors: 1
+        detect_unicode: 0
+        cgi.fix_pathinfo: 0
+    modules:
+        - php5-xdebug
+        - php5-mysql
+        - php5-imagick
+        - php5-curl
+        - php5-intl
+    ioncube: ~
+    phalcon: ~
+hhvm:
+    enabled: ~
+apache:
+    enabled: ~
+    fqdn: ~
+    modules: ~
+nginx:
+    enabled: ~
+memcached:
+    enabled: ~

@@ -1,0 +1,7 @@
+---
+
+# file: dbservers.yml
+
+- hosts: dbservers
+  roles:
+    - mysql
