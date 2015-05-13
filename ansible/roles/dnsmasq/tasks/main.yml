@@ -1,0 +1,11 @@
+---
+
+- name: install packages
+  apt: pkg={{ item}} state=latest
+  with_items:
+    - dnsmasq
+
+- name: add addresses
+  template: src=addresses.conf.j2 dest=/etc/dnsmasq.d/addresses.conf mode=0644
+  notify:
+      - restart dnsmasq

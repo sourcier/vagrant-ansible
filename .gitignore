@@ -5,7 +5,8 @@
 /.vagrant/*
 /atlassian-ide-plugin.xml
 /ansible/group_vars/all.yml
-/ansible/group_vars/dbservers.yml
-/ansible/group_vars/webservers.yml
+/ansible/group_vars/database_servers.yml
+/ansible/group_vars/web_servers.yml
+/ansible/group_vars/dns_servers.yml
 /ansible/host_vars/hobo.yml
 /ansible/host_vars/tramp.yml

@@ -1,7 +1,7 @@
 ---
 
 ansible_ssh_user: vagrant
-sudo: true
+ansible_sudo: true
 apache:
     enabled: true
     fqdn: hobo

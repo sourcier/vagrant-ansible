@@ -1,8 +1,6 @@
 ---
 
-# file: common.yml
-
-- hosts: webservers
+- hosts: web_servers
   roles:
     - nfs
     - php

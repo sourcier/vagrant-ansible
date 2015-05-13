@@ -1,0 +1,5 @@
+{% if dns.addresses is defined %}
+    {% for address in dns.addresses %}
+        address=/{{ address.domain }}/{{ address.ip }}
+    {% endfor %}
+{% endif %}

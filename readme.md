@@ -57,7 +57,7 @@ php:
     phalcon: true
 ```
 
-## Add virtual hosts
+## Virtualhosts
 
 Open the ansible extra vars file for the host ```ansible/vars/<host>.yml```, add extra virtual hosts by adding the
 following:
@@ -93,6 +93,21 @@ types:
     - extensions:
             - .phar
       handler: application/x-httpd-php
+```
+
+## DNS
+
+The vm provides an instance of dnsmasq which can be configured by adding the following config:
+
+dns:
+    addresses:
+        - {domain: dev, ip: 10.0.0.3}
+
+Configure local dns by doing the following:
+
+```bash
+$ sudo touch /etc/resolver/dev
+$ sudo cat nameserver 10.0.0.3 > /etc/resolver/dev
 ```
 
 ## Provision

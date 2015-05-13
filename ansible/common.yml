@@ -1,7 +1,5 @@
 ---
 
-# file: common.yml
-
 - hosts: all
   roles:
     - common
