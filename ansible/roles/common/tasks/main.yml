@@ -4,4 +4,3 @@
 - include: apt.yml
 - include: ntp.yml
 - include: packages.yml
-- include: hosts.yml
