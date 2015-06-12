@@ -1,0 +1,7 @@
+---
+
+-
+    name: create files
+    file: path={{ item }} state=touch mode=0644
+    with_items: files
+    when: files

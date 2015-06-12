@@ -1,5 +1,7 @@
 ---
 
+- include: paths.yml
+- include: files.yml
 - include: sshd.yml
 - include: apt.yml
 - include: ntp.yml
