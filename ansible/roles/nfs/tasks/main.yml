@@ -8,6 +8,6 @@
          src={{ item.source }}
          fstype=nfs
          state=mounted
-         opts=defaults,noatime,nodiratime,rsize=8192,wsize=8192,hard,intr
+         opts=defaults,noatime,nodiratime,rsize=1048576,wsize=1048576,hard,intr
   with_items: nfs.mounts
   when: nfs.enabled and nfs.mounts
