@@ -110,6 +110,24 @@ $ sudo touch /etc/resolver/dev
 $ sudo cat nameserver 10.0.0.3 > /etc/resolver/dev
 ```
 
+## NFS
+
+It is possible to use NFS for mounting the code inside the VM.
+
+```yml
+nfs:
+    enabled: true
+    mounts:
+        - {source: '10.0.0.1:/foo', destination: '/bar'}
+```
+
+On OSX you can define NFS shares by doing the following:
+
+```bash
+$ sudo touch /etc/exports
+$ sudo echo '/foo -alldirs -mappall=${USERNAME}:staff' > /etc/exports
+```
+
 ## Provision
 
 You can start and provision the machine by running the following:

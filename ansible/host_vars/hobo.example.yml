@@ -6,3 +6,5 @@ apache:
     enabled: true
     fqdn: hobo
     modules: ~
+paths: ~
+files: ~
