@@ -2,6 +2,6 @@
 
 -
     name: create files
-    file: path={{ item }} state=touch mode=0644
+    file: path={{ item.path }} state=touch mode={{ item.permissions }}
     with_items: files
     when: files

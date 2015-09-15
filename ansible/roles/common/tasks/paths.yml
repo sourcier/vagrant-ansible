@@ -2,6 +2,6 @@
 
 -
     name: create paths
-    file: path={{ item }} state=directory mode=0755 recurse=yes
+    file: path={{ item.path }} state=directory mode={{ item.permissions }} recurse=yes
     with_items: paths
     when: paths
