@@ -7,5 +7,6 @@
 
 - name: add addresses
   template: src=addresses.conf.j2 dest=/etc/dnsmasq.d/addresses.conf mode=0644
+  when: dns.addresses
   notify:
       - restart dnsmasq
