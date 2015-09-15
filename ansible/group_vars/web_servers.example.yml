@@ -34,3 +34,4 @@ nginx:
     enabled: ~
 memcached:
     enabled: ~
+vhosts: ~
