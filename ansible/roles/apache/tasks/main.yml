@@ -52,5 +52,6 @@
 - name: enable apache sites
   command: a2ensite {{ item.server_name }} creates=/etc/apache2/sites-enabled/{{ item.server_name }}
   with_items: vhosts
+  when: vhosts
   notify:
     - restart apache
