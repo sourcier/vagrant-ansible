@@ -2,3 +2,10 @@
 
 gather_facts: false
 timezone: Europe/London
+apt:
+    packages:
+        - python-pycurl
+        - python-mysqldb
+        - libcurl4-gnutls-dev
+        - libxml2-dev
+        - libpcre3-dev

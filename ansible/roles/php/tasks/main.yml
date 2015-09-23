@@ -9,3 +9,6 @@
 
 - include: phalcon.yml
   when: php.phalcon | default(false)
+
+- include: pecl.yml
+  when: php.pecl | default(false)

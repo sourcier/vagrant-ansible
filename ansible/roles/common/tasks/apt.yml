@@ -5,6 +5,5 @@
 
 - name: install packages required for vagrant
   apt: pkg={{ item }} state=latest
-  with_items:
-    - python-pycurl
-    - python-mysqldb
+  with_items: apt.packages
+  when: apt.packages

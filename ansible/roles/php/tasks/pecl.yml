@@ -1,0 +1,25 @@
+---
+
+- name: install pecl modules
+  shell: yes | pecl install -f {{ item }} ; touch ~{{ ansible_ssh_user }}/.pecl_{{ item }}
+           creates=~{{ ansible_ssh_user }}/.pecl_{{ item }}
+  with_items: php.pecl
+
+- name: add pecl module configs
+  shell: echo 'extension={{ item }}.so' > /etc/php5/mods-available/{{ item }}.ini
+         creates=/etc/php5/mods-available/{{ item }}.ini
+  with_items: php.pecl
+
+- name: enable pecl module configs for fpm
+  file: src=/etc/php5/mods-available/{{ item }}.ini dest=/etc/php5/fpm/conf.d/20-{{ item }}.ini state=link
+  with_items: php.pecl
+  notify:
+      - restart nginx
+      - restart apache
+
+- name: enable pecl module configs for cli
+  file: src=/etc/php5/mods-available/{{ item }}.ini dest=/etc/php5/cli/conf.d/20-{{ item }}.ini state=link
+  with_items: php.pecl
+  notify:
+      - restart nginx
+      - restart apache
