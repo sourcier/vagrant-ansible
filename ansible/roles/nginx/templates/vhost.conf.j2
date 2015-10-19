@@ -1,7 +1,8 @@
 server {
+
     listen {{ item.port | default('80') }};
 
-    server_name {{ item.server_name }};
+    server_name {{ item.server_name }} {% if item.server_aliases is defined %}{{ item.server_aliases|join(" ") }}{% endif %};
 
     root {{ item.document_root }};
 
@@ -25,4 +26,10 @@ server {
     {% else%}
         {% include 'default.conf.j2' %}
     {% endif %}
+
+    {% include 'aliases.conf.j2' %}
+
+    {% include 'rewrites.conf.j2' %}
+
+
 }

@@ -1,6 +1,6 @@
 location /
 {
-    try_files $uri $uri/ =404;
+    try_files $uri $uri/ @rewrites;
 }
 
 # Pass PHP scripts to PHP-FPM
@@ -11,4 +11,5 @@ location ~ \.php(/|$)
     include fastcgi_params;
     fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
     fastcgi_param  HTTPS off;
+    {% include 'environment_variables.conf.j2' with context %}
 }
