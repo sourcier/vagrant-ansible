@@ -1,7 +1,6 @@
-location @rewrites {
 {% if item.rewrites is defined %}
     {% for rewrite in item.rewrites %}
         rewrite {{ rewrite.regex }} {{ rewrite.replacement }} {{ rewrite.flag }};
+
     {% endfor %}
 {% endif %}
-}

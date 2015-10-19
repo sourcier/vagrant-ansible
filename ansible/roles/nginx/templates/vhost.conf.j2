@@ -19,6 +19,10 @@ server {
         deny all;
     }
 
+    {% include 'rewrites.conf.j2' %}
+
+    {% include 'aliases.conf.j2' %}
+
     {% if item.symfony is defined and item.symfony == true %}
         {% include 'symfony.conf.j2' %}
     {% elif item.silex is defined and item.silex == true %}
@@ -26,10 +30,5 @@ server {
     {% else%}
         {% include 'default.conf.j2' %}
     {% endif %}
-
-    {% include 'aliases.conf.j2' %}
-
-    {% include 'rewrites.conf.j2' %}
-
 
 }

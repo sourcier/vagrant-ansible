@@ -1,10 +1,10 @@
 location /
 {
-    try_files $uri $uri/ @rewrites;
+    try_files {{ item.try_files | default('$uri $uri/ =404') }};
 }
 
 # Pass PHP scripts to PHP-FPM
-location ~ \.php(/|$)
+location ~ \.php$
 {
     fastcgi_pass unix:/var/run/php5-fpm.sock;
     fastcgi_split_path_info ^(.+\.php)(/.*)$;
