@@ -1,7 +1,13 @@
 ---
 
+- name: check if php is installed
+  command: which php
+  ignore_errors: true
+  register: php_check
+
 - name: add ppa:ondrej/php5-5.6 repo
   command: add-apt-repository ppa:ondrej/php5-5.6 --yes
+  when: php_check|failed
 
 - name: install php
   apt: pkg={{ item }} state=latest update_cache=yes
@@ -10,6 +16,7 @@
     - php5-dev
     - php5-cli
     - php5-fpm
+  when: php_check|failed
 
 - name: update php configs
   template: src=php.ini.j2 dest={{ item }} mode=0644
