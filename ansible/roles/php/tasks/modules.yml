@@ -4,3 +4,4 @@
   notify:
     - restart nginx
     - restart apache
+    - restart php5-fpm

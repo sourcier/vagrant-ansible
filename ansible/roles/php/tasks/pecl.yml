@@ -16,6 +16,7 @@
   notify:
       - restart nginx
       - restart apache
+      - restart php5-fpm
 
 - name: enable pecl module configs for cli
   file: src=/etc/php5/mods-available/{{ item }}.ini dest=/etc/php5/cli/conf.d/20-{{ item }}.ini state=link
@@ -23,3 +24,4 @@
   notify:
       - restart nginx
       - restart apache
+      - restart php5-fpm
