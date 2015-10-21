@@ -1,7 +1,7 @@
 ---
 
 - name: create init.d scripts for custom services
-  template: src=init.d.conf.j2 dest=/etc/init.d/{{ item.name }} mode=0755
+  template: src=initd.conf.j2 dest=/etc/init.d/{{ item.name }} mode=0755
   with_items: services
   when: services
 
