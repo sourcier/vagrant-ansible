@@ -1,0 +1,11 @@
+---
+
+- name: create upstart services
+  template: src=init.conf.j2 dest=/etc/init/{{ item.name }}.conf mode=0644
+  with_items: services
+  when: services
+
+- name: restart upstart services
+  service: name={{ item.name }} state=restarted enabled=yes
+  with_items: services
+  when: services

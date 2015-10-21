@@ -10,8 +10,3 @@
 
 - name: restart sshd
   service: name=ssh state=restarted enabled=yes
-
-- name: restart custom services
-  service: name={{ item.name }} state=restarted enabled=yes
-  with_items: services
-  when: services
