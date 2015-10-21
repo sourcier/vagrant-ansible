@@ -20,3 +20,19 @@
   when: vhosts
   notify:
     - restart nginx
+
+- name: create reverse proxy entries
+  template: src=reverse-proxy.conf.j2 dest=/etc/nginx/sites-available/{{ item.server_name }}.conf mode=0644
+  with_items: nginx.reverse_proxies
+  when: nginx.reverse_proxies
+  notify:
+      - restart nginx
+
+- name: link reverse proxy entries
+  file: src=/etc/nginx/sites-available/{{ item.server_name }}.conf
+        dest=/etc/nginx/sites-enabled/{{ item.server_name }}.conf
+        state=link
+  with_items: nginx.reverse_proxies
+  when: nginx.reverse_proxies
+  notify:
+    - restart nginx
