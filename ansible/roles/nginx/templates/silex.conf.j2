@@ -17,7 +17,7 @@ location @site {
     fastcgi_pass unix:/var/run/php5-fpm.sock;
     include fastcgi_params;
 
-    {% include 'environment_variables.conf.j2' with context %}
+    {% include 'environment-variables.conf.j2' with context %}
 
     fastcgi_param  SCRIPT_FILENAME $document_root/index.php;
     fastcgi_param HTTPS off;

@@ -11,5 +11,5 @@ location ~ \.php$
     include fastcgi_params;
     fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
     fastcgi_param  HTTPS off;
-    {% include 'environment_variables.conf.j2' with context %}
+    {% include 'environment-variables.conf.j2' with context %}
 }
