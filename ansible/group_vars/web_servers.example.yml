@@ -31,7 +31,10 @@ hhvm:
 apache:
     enabled: ~
     fqdn: ~
-    modules: ~
+    modules:
+        - actions
+        - rewrite
+        - vhost_alias
 nginx:
     enabled: ~
 memcached:

@@ -19,6 +19,11 @@
   notify:
     - restart apache
 
+- name: create apache ports config
+  template: src=ports.conf.j2 dest=/etc/apache2/ports.conf mode=0644
+  notify:
+      - restart apache
+
 - name: create apache fqdn conf
   template: src=fqdn.j2 dest=/etc/apache2/conf-available/fqdn.conf mode=0644
   notify:
@@ -44,14 +49,20 @@
 
 - name: create vhost entries
   template: src=vhost.conf.j2 dest=/etc/apache2/sites-available/{{ item.server_name }}.conf mode=0644
-  with_items: vhosts
-  when: vhosts
+  with_items: apache.vhosts
+  when: apache.vhosts
   notify:
       - restart apache
 
 - name: enable apache sites
   command: a2ensite {{ item.server_name }} creates=/etc/apache2/sites-enabled/{{ item.server_name }}
-  with_items: vhosts
-  when: vhosts
+  with_items: apache.vhosts
+  when: apache.vhosts
+  notify:
+    - restart apache
+
+- name: disable default apache site
+  command: a2ensite 000-default
+  when: apache.vhosts
   notify:
     - restart apache
