@@ -5,7 +5,6 @@ start on filesystem or runlevel [2345]
 stop on shutdown
 
 respawn
-respawn limit unlimited
 
 script
     cd {{ item.path }}
@@ -20,4 +19,8 @@ end script
 pre-stop script
     rm /var/run/{{ item.name }}.pid
     echo "[`date`] {{ item.name }} Stopping" >> /var/log/{{ item.name }}.log
+end script
+
+post-stop script
+    exec sleep 8
 end script
