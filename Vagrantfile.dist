@@ -38,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             ansible.inventory_path = 'ansible/inventory/development.ini'
             ansible.playbook = 'ansible/site.yml'
             ansible.host_key_checking = false
-            ansible.extra_vars = '@ansible/host_vars/hobo.yml'
+            ansible.extra_vars = 'ansible/host_vars/hobo.yml'
         end
     end
 end
