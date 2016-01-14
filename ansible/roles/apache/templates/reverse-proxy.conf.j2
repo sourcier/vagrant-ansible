@@ -1,0 +1,6 @@
+<VirtualHost *:{{ item.port | default('80') }}>
+    ServerName {{ item.server_name }}
+    ProxyPreserveHost On
+    ProxyPass / {{ item.target }}/
+    ProxyPassReverse / {{ item.target }}/
+</VirtualHost>

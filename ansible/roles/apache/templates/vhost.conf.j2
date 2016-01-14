@@ -1,4 +1,4 @@
-<VirtualHost *:{{ item.port | default('8080') }}>
+<VirtualHost *:{{ item.port | default('80') }}>
 
     ServerName {{ item.server_name }}
 
