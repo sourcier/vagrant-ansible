@@ -38,6 +38,21 @@
     LogLevel {{ item.log_level | default('error rewrite:error') }}
 
     <Directory {{ item.document_root }}>
+        
+        {% if item.rewrites is defined %}
+            <IfModule mod_rewrite.c>
+                RewriteEngine on
+                RewriteBase /
+                
+                {% for rewrite in item.rewrites %}
+                    {% for condition in rewrite.conditions %}
+                        RewriteCond {{ condition }}
+                    {% endfor %}
+                        RewriteRule {{ rewrite.source }} {{ rewrite.target }} {{ rewrite.flags }}
+                {% endfor %}
+            </IfModule>
+        {% endif %}
+        
         {{ item.options | default('Options Indexes FollowSymLinks MultiViews') }}
         AllowOverride all
         Order allow,deny
