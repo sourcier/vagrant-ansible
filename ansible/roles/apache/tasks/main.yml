@@ -64,14 +64,14 @@
 - name: create reverse proxy entries
   template: src=reverse-proxy.conf.j2 dest=/etc/apache2/sites-available/{{ item.server_name }}.conf mode=0644
   with_items: apache.reverse_proxies
-  when: apache.reverse_proxies
+  when: apache.reverse_proxies is defined
   notify:
       - restart apache
 
 - name: enable reverse proxies
   command: a2ensite {{ item.server_name }} creates=/etc/apache2/sites-enabled/{{ item.server_name }}
   with_items: apache.reverse_proxies
-  when: apache.reverse_proxies
+  when: apache.reverse_proxies is defined
   notify:
     - restart apache
 
