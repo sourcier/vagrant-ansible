@@ -6,6 +6,13 @@ stop on shutdown
 
 respawn
 
+# Set environment variables
+{% if item.environment_variables is defined %}
+    {% for environment_variable in item.environment_variables %}
+        env {{ environment_variable.name }}={{ environment_variable.value }}
+    {% endfor %}
+{% endif %}
+
 script
     cd {{ item.path }}
     echo $$ > /var/run/{{ item.name }}.pid
