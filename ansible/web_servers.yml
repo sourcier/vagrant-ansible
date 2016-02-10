@@ -8,3 +8,4 @@
     - {role: memcached, when: memcached.enabled}
     - {role: nginx, when: nginx.enabled}
     - {role: apache, when: apache.enabled}
+    - {role: nodejs, when: nodejs.enabled}

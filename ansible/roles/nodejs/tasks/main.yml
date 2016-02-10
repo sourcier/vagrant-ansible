@@ -1,0 +1,16 @@
+---
+
+-
+    name: Add NodeSource apt key
+    apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+
+- 
+    name: Add NodeSource repositories
+    apt_repository: repo="{{ item }}" state=present update_cache=yes
+    with_items:
+        - deb https://deb.nodesource.com/node_5.x trusty main
+        - deb-src https://deb.nodesource.com/node_5.x trusty main
+
+- 
+    name: Install Node.js and NPM
+    apt: name=nodejs state=present
