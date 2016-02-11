@@ -14,3 +14,8 @@
 - 
     name: Install Node.js and NPM
     apt: name=nodejs state=present
+    
+-
+    npm: name={{ item }} global=yes state=latest
+    with_items: nodejs.packages
+    when: nodejs.packages is defined
