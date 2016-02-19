@@ -1,0 +1,18 @@
+---
+
+-
+    name: Add MongoDB apt key
+    apt_key: id=EA312927 state=present keyserver=keyserver.ubuntu.com
+    
+- 
+    name: Add MongoDB repo
+    apt_repository: repo='deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse' state=present update_cache=yes
+    
+- 
+    name: Install MongoDB
+    apt: name=mongodb-org state=present
+    
+- name: Update MongoDB config
+  template: src=mongod.conf.j2 dest=/etc/mongod.conf mode=0644
+  notify:
+      - restart mongod

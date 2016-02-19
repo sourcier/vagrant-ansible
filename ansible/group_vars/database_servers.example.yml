@@ -1,6 +1,7 @@
 ---
 
 mysql:
+    enabled: ~
     bind_ip: 0.0.0.0
     root_password: root
     hosts:
@@ -8,3 +9,7 @@ mysql:
         - ::1
         - localhost
         - '%'
+mongodb:
+    enabled: ~
+    port: 27017
+    bind_ip: 127.0.0.1

@@ -2,4 +2,5 @@
 
 - hosts: database_servers
   roles:
-    - mysql
+    - {role: mysql, when: mysql.enabled}
+    - {role: mongodb, when: mongodb.enabled}
