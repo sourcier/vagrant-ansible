@@ -6,7 +6,7 @@
   register: php_check
 
 - name: add ppa:ondrej/php5-5.6 repo
-  command: add-apt-repository ppa:ondrej/php5-5.6 --yes
+  shell: LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php5-5.6 --yes
   when: php_check|failed
 
 - name: install php
