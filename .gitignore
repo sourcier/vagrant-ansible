@@ -10,3 +10,4 @@
 /ansible/group_vars/dns_servers.yml
 /ansible/host_vars/hobo.yml
 /ansible/host_vars/tramp.yml
+/ansible/site.retry
